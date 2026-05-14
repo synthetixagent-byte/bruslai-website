@@ -98,6 +98,8 @@
     .contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 40px; }
     .contact-row a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
     .contact-row a:hover { color: var(--accent); border-color: var(--accent); }
+    .contact-row a.email-btn { display: inline-block; padding: 12px 22px; background: var(--ink); color: #fff; border: none; border-radius: 4px; font-size: 0.95rem; font-weight: 500; transition: background 0.2s ease; }
+    .contact-row a.email-btn:hover { background: var(--accent); color: #fff; }
     .contact-row .label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
     .contact-row .value { font-size: 1.05rem; }
 
@@ -221,7 +223,9 @@
       <div class="contact-row">
         <div>
           <div class="label">General inquiries</div>
-          <div class="value"><a href="mailto:aiplainsimple@gmail.com">aiplainsimple@gmail.com</a></div>
+          <div class="value">
+            <a class="email-btn" href="#" onclick="this.href='mailto:'+atob('YWlwbGFpbnNpbXBsZUBnbWFpbC5jb20=');return true;">Send us an email →</a>
+          </div>
         </div>
         <div>
           <div class="label">Registered office</div>
@@ -241,7 +245,6 @@
         <ul class="footer-links">
           <li><a href="privacy.html">Privacy policy</a></li>
           <li><a href="terms.html">Terms of service</a></li>
-          <li><a href="mailto:aiplainsimple@gmail.com">Contact</a></li>
         </ul>
       </div>
     </div>
