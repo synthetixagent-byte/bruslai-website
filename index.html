@@ -46,13 +46,13 @@
 
   <style>
     :root {
-      --bg: #1d3832;
-      --surface: #25433c;
-      --ink: #f3f6f4;
-      --muted: #aac1b8;
-      --line: #2f4a44;
-      --accent: #c5dccf;
-      --accent-light: #9bc1b4;
+      --bg: #ebe2cc;
+      --surface: #1d3832;
+      --ink: #2a2418;
+      --muted: #7a6f55;
+      --line: #d8cdb0;
+      --accent: #1d3832;
+      --accent-light: #2c4636;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; scroll-padding-top: 80px; }
@@ -67,18 +67,22 @@
       border-bottom: 1px solid transparent;
     }
     nav.top.scrolled {
-      background: rgba(29, 56, 50, 0.92);
+      background: rgba(235, 226, 204, 0.92);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
       padding: 16px 0;
     }
     nav.top .inner { display: flex; align-items: center; justify-content: space-between; padding: 0 32px; max-width: 1100px; margin: 0 auto; }
-    nav.top a.brand { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.15rem; color: #fff; text-decoration: none; }
+    nav.top a.brand { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.15rem; color: #fff; text-decoration: none; transition: color 0.3s ease; }
     nav.top ul { list-style: none; display: flex; gap: 36px; }
-    nav.top ul a { color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500; opacity: 0.9; transition: opacity 0.15s ease, color 0.15s ease; }
-    nav.top ul a:hover { opacity: 1; color: var(--accent); }
-    .menu-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; padding: 4px; }
+    nav.top ul a { color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500; opacity: 0.9; transition: opacity 0.15s ease, color 0.3s ease; }
+    nav.top ul a:hover { opacity: 1; color: var(--accent-light); }
+    nav.top.scrolled a.brand { color: var(--ink); }
+    nav.top.scrolled ul a { color: var(--ink); opacity: 1; }
+    nav.top.scrolled ul a:hover { color: var(--accent); }
+    .menu-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; padding: 4px; transition: color 0.3s ease; }
+    nav.top.scrolled .menu-toggle { color: var(--ink); }
 
     /* Hero — full-bleed photo with dark overlay */
     .hero {
@@ -94,9 +98,9 @@
       padding-bottom: 110px;
     }
     .hero .content { max-width: 1100px; margin: 0 auto; padding: 0 32px; width: 100%; }
-    .hero .eyebrow { font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent-light); margin-bottom: 28px; }
+    .hero .eyebrow { font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; color: #c5dccf; margin-bottom: 28px; }
     .hero h1 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(2.6rem, 6.5vw, 4.8rem); line-height: 1.05; letter-spacing: -0.02em; max-width: 920px; }
-    .hero h1 em { font-style: italic; color: var(--accent-light); font-weight: 400; }
+    .hero h1 em { font-style: italic; color: #9bc1b4; font-weight: 400; }
     .hero p.lede { font-size: 1.2rem; color: rgba(255, 255, 255, 0.88); max-width: 620px; margin-top: 32px; }
 
     /* Sections */
@@ -142,11 +146,11 @@
 
     /* Portfolio */
     .ventures { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 40px; }
-    .venture { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 36px 32px; transition: border-color 0.2s ease, transform 0.2s ease; }
-    .venture:hover { border-color: var(--accent-light); transform: translateY(-2px); }
-    .venture .label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 14px; }
-    .venture h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.5rem; margin-bottom: 10px; }
-    .venture p { color: var(--muted); font-size: 0.95rem; }
+    .venture { background: var(--surface); color: #f3f6f4; border-radius: 4px; padding: 36px 32px; transition: transform 0.2s ease, background 0.2s ease; }
+    .venture:hover { background: #2c4636; transform: translateY(-2px); }
+    .venture .label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #9bc1b4; margin-bottom: 14px; }
+    .venture h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.5rem; margin-bottom: 10px; color: #f3f6f4; }
+    .venture p { color: #aac1b8; font-size: 0.95rem; }
     .venture.placeholder { opacity: 0.55; }
 
     /* Focus — vertical list of investment areas */
@@ -158,7 +162,7 @@
 
     /* Approach */
     .principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-top: 50px; }
-    .principle .num { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--accent-light); margin-bottom: 12px; }
+    .principle .num { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 12px; }
     .principle h4 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.2rem; margin-bottom: 8px; }
     .principle p { color: var(--muted); font-size: 0.95rem; }
 
@@ -166,8 +170,8 @@
     .contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 40px; }
     .contact-row a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); }
     .contact-row a:hover { color: var(--accent); border-color: var(--accent); }
-    .contact-row a.email-btn { display: inline-block; padding: 12px 22px; background: var(--accent-light); color: #1d3832; border: none; border-radius: 4px; font-size: 0.95rem; font-weight: 600; transition: background 0.2s ease; }
-    .contact-row a.email-btn:hover { background: var(--accent); color: #1d3832; }
+    .contact-row a.email-btn { display: inline-block; padding: 12px 22px; background: var(--accent); color: var(--bg); border: none; border-radius: 4px; font-size: 0.95rem; font-weight: 500; transition: background 0.2s ease; }
+    .contact-row a.email-btn:hover { background: var(--accent-light); color: var(--bg); }
     .contact-row .label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
     .contact-row .value { font-size: 1.05rem; }
 
@@ -262,7 +266,7 @@
         <div class="venture">
           <div class="label">In development</div>
           <h3>Accounting software</h3>
-          <p>Modern bookkeeping built for small businesses and accountants who don't want to fight their tools.</p>
+          <p>Modern bookkeeping that just works. Built for small businesses and accountants who value their time.</p>
         </div>
       </div>
     </div>
