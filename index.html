@@ -4,8 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Brus Lai AS — A Norwegian holding company</title>
-  <meta name="description" content="Brus Lai AS is a Norwegian holding company investing in and operating technology, software, and consumer digital products." />
+  <meta name="description" content="Brus Lai AS is a Norwegian holding company. We commit patient capital to long-term positions in technology and AI, and operate a small set of owned software ventures alongside." />
   <meta name="google-site-verification" content="jizUps5A0HOwYEKk0kS4hwMANmHF9uS_dOM4_5mbaZI" />
+
+  <meta property="og:title" content="Brus Lai AS" />
+  <meta property="og:description" content="A Norwegian holding company. Patient capital in technology and AI, plus a small set of owned software ventures." />
+  <meta property="og:url" content="https://bruslai.no" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://bruslai.no/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Brus Lai AS" />
+  <meta name="twitter:description" content="A Norwegian holding company. Patient capital in technology and AI, plus a small set of owned software ventures." />
+  <meta name="twitter:image" content="https://bruslai.no/og.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Brus Lai AS",
+    "legalName": "Brus Lai AS",
+    "url": "https://bruslai.no",
+    "logo": "https://bruslai.no/og.png",
+    "description": "A Norwegian holding company. Patient capital in technology and AI, plus a small set of owned software ventures.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Eidsvikvegen 26",
+      "addressLocality": "Strusshamn",
+      "postalCode": "5302",
+      "addressCountry": "NO"
+    },
+    "taxID": "922 712 476",
+    "areaServed": "Worldwide"
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -87,6 +120,13 @@
     .venture p { color: var(--muted); font-size: 0.95rem; }
     .venture.placeholder { opacity: 0.55; }
 
+    /* Focus — vertical list of investment areas */
+    .focus-list { margin-top: 40px; }
+    .focus-item { padding: 24px 0; border-top: 0.5px solid var(--line); }
+    .focus-item:first-child { border-top: 0; padding-top: 0; }
+    .focus-item h4 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.2rem; margin-bottom: 8px; color: var(--ink); }
+    .focus-item p { color: var(--muted); font-size: 1rem; line-height: 1.6; }
+
     /* Approach */
     .principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-top: 50px; }
     .principle .num { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 12px; }
@@ -138,6 +178,7 @@
       <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#focus">Focus</a></li>
         <li><a href="#approach">Approach</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -147,8 +188,8 @@
   <header class="hero" id="top">
     <div class="content">
       <div class="eyebrow">A Norwegian holding company</div>
-      <h1>Building <em>enduring</em> digital ventures from Norway.</h1>
-      <p class="lede">Brus Lai AS invests in and operates technology, software, and consumer digital products with a long-term perspective.</p>
+      <h1><em>Concentrated.</em> Long-held.</h1>
+      <p class="lede">Brus Lai AS commits patient capital to technology and AI, and owns a small set of software ventures alongside.</p>
     </div>
   </header>
 
@@ -160,8 +201,8 @@
           <h2>Long-term capital. Operator mindset.</h2>
         </div>
         <div class="col-text">
-          <p>Brus Lai AS is a privately held Norwegian company. We invest patient capital into early-stage software and digital products, and we operate our own ventures rather than treat them as portfolio entries.</p>
-          <p>Our work is unhurried, deliberate, and grounded in quality. We believe modest scope and careful craft outperform speed and noise.</p>
+          <p>Brus Lai AS is a privately held Norwegian holding company. Our work is concentrated capital deployment &mdash; long-term positions in technology and the AI ecosystem, alongside a small set of owned software ventures.</p>
+          <p>We're not a fund. We don't operate on exit timelines. Operating our own ventures keeps the investment thinking grounded in real product reality, not slide decks.</p>
         </div>
       </div>
     </div>
@@ -173,19 +214,50 @@
       <h2>Where our work lives.</h2>
       <div class="ventures">
         <div class="venture">
-          <div class="label">Software</div>
-          <h3>Vexsort</h3>
-          <p>A daily puzzle game for iOS and Android. One puzzle a day; everyone in the world plays the same one.</p>
+          <div class="label">Capital</div>
+          <h3>Long-term positions</h3>
+          <p>Concentrated, multi-year positions in major technology platforms and the AI ecosystem.</p>
         </div>
         <div class="venture">
-          <div class="label">Investments</div>
-          <h3>Public markets</h3>
-          <p>Long-term positions in companies we understand. Quietly held, rarely discussed.</p>
+          <div class="label">Software</div>
+          <h3>Mobile games</h3>
+          <p>Daily puzzles for iOS and Android. Long sessions per user, low marketing overhead, products people return to without prompting.</p>
         </div>
         <div class="venture">
           <div class="label">In development</div>
-          <h3>Future ventures</h3>
-          <p>New products and investments under exploration. Announcements when meaningful, not before.</p>
+          <h3>Accounting software</h3>
+          <p>Modern bookkeeping built for small businesses and accountants who don't want to fight their tools.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="focus">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <div class="section-eyebrow">Focus</div>
+          <h2>Where we look.</h2>
+        </div>
+        <div class="col-text">
+          <div class="focus-list">
+            <div class="focus-item">
+              <h4>AI infrastructure and applications.</h4>
+              <p>Concentrated positions in the companies architecting the next decade of compute, models, and applied AI &mdash; held with multi-year conviction.</p>
+            </div>
+            <div class="focus-item">
+              <h4>US technology platforms.</h4>
+              <p>Durable franchises with structural advantages: distribution, data, switching costs. We tend to own the architects, not the visitors.</p>
+            </div>
+            <div class="focus-item">
+              <h4>Emerging markets, selectively.</h4>
+              <p>Quiet exposure to under-covered geographies where governance and growth align.</p>
+            </div>
+            <div class="focus-item">
+              <h4>Public equities only.</h4>
+              <p>No private allocations, no leverage, no exotic instruments.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -198,18 +270,18 @@
       <div class="principles">
         <div class="principle">
           <div class="num">01</div>
-          <h4>Patient capital</h4>
-          <p>We invest with a decade-plus horizon. No fund clocks, no forced exits.</p>
+          <h4>Decade-plus horizon</h4>
+          <p>Software takes years to compound. We don't shortcut that.</p>
         </div>
         <div class="principle">
           <div class="num">02</div>
-          <h4>Operator first</h4>
-          <p>We build the things we back. Strategy is shaped by what we learn shipping product.</p>
+          <h4>Operator-led</h4>
+          <p>We build the products we back, which keeps our investment thinking grounded in real product reality.</p>
         </div>
         <div class="principle">
           <div class="num">03</div>
-          <h4>Quiet quality</h4>
-          <p>Modest scope, careful craft. We optimise for products that age well, not announcements that trend briefly.</p>
+          <h4>Boring is good</h4>
+          <p>We optimise for products that work reliably and businesses that don't blow up. Growth comes from that, not from hype.</p>
         </div>
       </div>
     </div>
