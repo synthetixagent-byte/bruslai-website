@@ -64,7 +64,9 @@ a{color:inherit}
 @keyframes gpgrain{0%,100%{transform:translate(0,0)}10%{transform:translate(-5%,-5%)}30%{transform:translate(3%,-8%)}50%{transform:translate(-4%,6%)}70%{transform:translate(6%,3%)}90%{transform:translate(-3%,-2%)}}
 
 /* atmosphere */
-.bg-wrap{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+/* fixed so orbs follow viewport on scroll — was absolute, which made bg-wrap
+   only span the first viewport height and clipped orbs into a visible line. */
+.bg-wrap{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
 .orb{position:absolute;border-radius:999px;filter:blur(38px);opacity:var(--gi)}
 /* Orbs — now static (animation removed for scroll perf). */
 .orb.a{top:-14%;left:6%;width:36vw;height:36vw;background:radial-gradient(circle,var(--glowA),transparent 64%)}
