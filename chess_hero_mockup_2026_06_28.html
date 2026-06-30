@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai AS — chess hero mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg-deep: #08090c;
+    --bg-mid: #0d1014;
+    --cream: #ebe2cc;
+    --cream-soft: #d8cdb0;
+    --green: #1d3832;
+    --green-soft: #2c4636;
+    --ink-light: rgba(235, 226, 204, 0.92);
+    --ink-soft: rgba(235, 226, 204, 0.55);
+    --ink-muted: rgba(235, 226, 204, 0.35);
+    --line: rgba(235, 226, 204, 0.12);
+  }
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+  }
+  body {
+    background: radial-gradient(ellipse at 50% 40%, #131820 0%, var(--bg-mid) 40%, var(--bg-deep) 100%);
+    color: var(--ink-light);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  /* Subtle film grain */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 200;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+
+  /* ── GLASSMORPHISM NAV ── */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 18px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8, 9, 12, 0.45);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border-bottom: 1px solid var(--line);
+  }
+  nav.top .brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    color: var(--cream);
+  }
+  nav.top ul {
+    list-style: none;
+    display: flex;
+    gap: 38px;
+  }
+  nav.top ul a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  nav.top ul a:hover { color: var(--cream); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding: 100px 48px 60px;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+
+  /* Chess canvas — absolute centered */
+  #chess-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    cursor: grab;
+  }
+  #chess-canvas:active { cursor: grabbing; }
+
+  /* Text overlay — left side, above canvas */
+  .hero-text {
+    position: relative;
+    z-index: 5;
+    max-width: 520px;
+    padding: 40px;
+    background: rgba(8, 9, 12, 0.35);
+    backdrop-filter: blur(20px) saturate(130%);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    align-self: center;
+    justify-self: start;
+    margin-left: 4vw;
+  }
+  .hero-text .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero-text .eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--ink-soft);
+  }
+  .hero-text h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(36px, 4.5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin-bottom: 24px;
+  }
+  .hero-text h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: #c4b896;
+  }
+  .hero-text p {
+    font-size: 1.02rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    max-width: 440px;
+  }
+
+  /* ── DRAG HINT (glass pill) ── */
+  .hint {
+    position: fixed;
+    bottom: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 10px 22px;
+    background: rgba(8, 9, 12, 0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeInHint 1.2s ease 0.8s forwards;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hint .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--cream);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes fadeInHint { to { opacity: 1; } }
+  @keyframes pulse { 0%,100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.4); } }
+
+  /* Responsive */
+  @media (max-width: 800px) {
+    .hero-text { margin: 0 auto; justify-self: center; padding: 28px; }
+    nav.top { padding: 16px 24px; }
+    nav.top ul { gap: 18px; }
+    nav.top ul a { font-size: 0.68rem; letter-spacing: 1px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a class="brand">Brus Lai AS</a>
+  <ul>
+    <li><a>Ventures</a></li>
+    <li><a>Approach</a></li>
+    <li><a>Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div id="chess-canvas"></div>
+
+  <div class="hero-text">
+    <div class="eyebrow">Norwegian holding company</div>
+    <h1>Patient capital.<br><em>Long-game play.</em></h1>
+    <p>Strategic positions in technology and AI, paired with a small set of owned software and game ventures we operate ourselves.</p>
+  </div>
+</section>
+
+<div class="hint">
+  <span class="dot"></span>
+  Drag to rotate
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  // ── SCENE ──
+  const container = document.getElementById('chess-canvas');
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x08090c, 12, 32);
+
+  const camera = new THREE.PerspectiveCamera(
+    35,
+    container.clientWidth / container.clientHeight,
+    0.1, 100
+  );
+  camera.position.set(8, 7, 10);
+  camera.lookAt(0, 1, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setClearColor(0x000000, 0);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+  container.appendChild(renderer.domElement);
+
+  // ── LIGHTS ──
+  // Ambient hemisphere (sky/ground tint)
+  const hemi = new THREE.HemisphereLight(0x445566, 0x080808, 0.4);
+  scene.add(hemi);
+
+  // Key light (cool, top-front, casts shadows)
+  const key = new THREE.DirectionalLight(0xfff8e8, 1.2);
+  key.position.set(8, 14, 6);
+  key.castShadow = true;
+  key.shadow.mapSize.width = 2048;
+  key.shadow.mapSize.height = 2048;
+  key.shadow.camera.near = 0.5;
+  key.shadow.camera.far = 40;
+  key.shadow.camera.left = -8;
+  key.shadow.camera.right = 8;
+  key.shadow.camera.top = 8;
+  key.shadow.camera.bottom = -8;
+  key.shadow.bias = -0.0005;
+  scene.add(key);
+
+  // Warm accent (rim from opposite side)
+  const accent = new THREE.SpotLight(0xffd9a0, 0.6, 25, Math.PI / 5, 0.4, 1);
+  accent.position.set(-6, 8, -4);
+  accent.target.position.set(0, 0, 0);
+  scene.add(accent);
+  scene.add(accent.target);
+
+  // Subtle fill from below to lift dark pieces
+  const fill = new THREE.DirectionalLight(0x8090a0, 0.15);
+  fill.position.set(-4, -2, 5);
+  scene.add(fill);
+
+  // ── BOARD ──
+  const BOARD_SIZE = 8;
+  const SQUARE = 0.9;
+  const BOARD_HALF = (BOARD_SIZE * SQUARE) / 2;
+
+  const lightMat = new THREE.MeshStandardMaterial({
+    color: 0xebe2cc, roughness: 0.55, metalness: 0.05
+  });
+  const darkMat = new THREE.MeshStandardMaterial({
+    color: 0x1d3832, roughness: 0.45, metalness: 0.08
+  });
+
+  const boardGroup = new THREE.Group();
+  for (let x = 0; x < BOARD_SIZE; x++) {
+    for (let z = 0; z < BOARD_SIZE; z++) {
+      const isLight = (x + z) % 2 === 0;
+      const geo = new THREE.BoxGeometry(SQUARE, 0.25, SQUARE);
+      const mesh = new THREE.Mesh(geo, isLight ? lightMat : darkMat);
+      mesh.position.set(
+        (x - BOARD_SIZE / 2 + 0.5) * SQUARE,
+        -0.125,
+        (z - BOARD_SIZE / 2 + 0.5) * SQUARE
+      );
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      boardGroup.add(mesh);
+    }
+  }
+
+  // Board base (subtle frame underneath)
+  const baseGeo = new THREE.BoxGeometry(BOARD_SIZE * SQUARE + 0.4, 0.15, BOARD_SIZE * SQUARE + 0.4);
+  const baseMat = new THREE.MeshStandardMaterial({
+    color: 0x0a0c0e, roughness: 0.3, metalness: 0.6
+  });
+  const base = new THREE.Mesh(baseGeo, baseMat);
+  base.position.y = -0.32;
+  base.castShadow = true;
+  base.receiveShadow = true;
+  boardGroup.add(base);
+
+  scene.add(boardGroup);
+
+  // ── PIECE SILHOUETTES (Lathe geometry) ──
+  // Each silhouette is a sequence of (radius, y) points rotated around Y axis.
+  function silhouettePawn() {
+    return [
+      [0.00, 0.00], [0.30, 0.00], [0.30, 0.05],
+      [0.22, 0.07], [0.18, 0.10], [0.18, 0.18],
+      [0.22, 0.30], [0.20, 0.36], [0.15, 0.40],
+      [0.14, 0.46], [0.20, 0.50], [0.22, 0.54],
+      [0.18, 0.58], [0.00, 0.60]
+    ];
+  }
+  function silhouetteRook() {
+    return [
+      [0.00, 0.00], [0.32, 0.00], [0.32, 0.07],
+      [0.24, 0.10], [0.20, 0.13], [0.20, 0.48],
+      [0.25, 0.50], [0.30, 0.52], [0.30, 0.62],
+      [0.18, 0.62], [0.18, 0.66], [0.00, 0.66]
+    ];
+  }
+  function silhouetteBishop() {
+    return [
+      [0.00, 0.00], [0.30, 0.00], [0.30, 0.06],
+      [0.22, 0.09], [0.17, 0.13], [0.17, 0.42],
+      [0.22, 0.55], [0.17, 0.62], [0.14, 0.66],
+      [0.20, 0.72], [0.10, 0.85], [0.00, 0.92]
+    ];
+  }
+  function silhouetteQueen() {
+    return [
+      [0.00, 0.00], [0.34, 0.00], [0.34, 0.07],
+      [0.26, 0.11], [0.19, 0.15], [0.19, 0.58],
+      [0.25, 0.70], [0.20, 0.76], [0.18, 0.80],
+      [0.28, 0.86], [0.32, 0.92], [0.18, 1.02],
+      [0.00, 1.08]
+    ];
+  }
+  function silhouetteKing() {
+    return [
+      [0.00, 0.00], [0.36, 0.00], [0.36, 0.08],
+      [0.28, 0.12], [0.20, 0.16], [0.20, 0.65],
+      [0.27, 0.78], [0.22, 0.84], [0.20, 0.88],
+      [0.30, 0.94], [0.34, 1.00], [0.20, 1.12],
+      [0.00, 1.14]
+    ];
+  }
+
+  function makePiece(silhouette, material, withCross = false) {
+    const pts = silhouette.map(([r, y]) => new THREE.Vector2(r, y));
+    const geo = new THREE.LatheGeometry(pts, 48);
+    const mesh = new THREE.Mesh(geo, material);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+
+    if (withCross) {
+      const crossGroup = new THREE.Group();
+      const vertGeo = new THREE.BoxGeometry(0.06, 0.18, 0.06);
+      const horzGeo = new THREE.BoxGeometry(0.16, 0.06, 0.06);
+      const v = new THREE.Mesh(vertGeo, material);
+      v.position.y = 1.22;
+      v.castShadow = true;
+      const h = new THREE.Mesh(horzGeo, material);
+      h.position.y = 1.24;
+      h.castShadow = true;
+      crossGroup.add(v); crossGroup.add(h);
+      const group = new THREE.Group();
+      group.add(mesh); group.add(crossGroup);
+      return group;
+    }
+    return mesh;
+  }
+
+  // Materials — premium subtle metallic for both sides
+  const whiteMat = new THREE.MeshStandardMaterial({
+    color: 0xf2ecd9, roughness: 0.35, metalness: 0.15,
+    emissive: 0x1a1408, emissiveIntensity: 0.05
+  });
+  const darkPieceMat = new THREE.MeshStandardMaterial({
+    color: 0x14241f, roughness: 0.4, metalness: 0.2
+  });
+
+  // Place a piece on board coords (file 0-7, rank 0-7)
+  function placePiece(group, mesh, file, rank, scale = 1.0) {
+    mesh.position.set(
+      (file - 3.5) * SQUARE,
+      0,
+      (rank - 3.5) * SQUARE
+    );
+    mesh.scale.set(scale, scale, scale);
+    group.add(mesh);
+  }
+
+  const piecesGroup = new THREE.Group();
+  const S = 1.6; // global piece scale (relative to silhouette unit)
+
+  // Strategic mid-game vignette — visually balanced, not full setup
+  placePiece(piecesGroup, makePiece(silhouetteKing(), whiteMat, true), 4, 0, S);
+  placePiece(piecesGroup, makePiece(silhouetteQueen(), whiteMat), 3, 1, S);
+  placePiece(piecesGroup, makePiece(silhouetteBishop(), whiteMat), 5, 2, S);
+  placePiece(piecesGroup, makePiece(silhouettePawn(), whiteMat), 4, 3, S);
+  placePiece(piecesGroup, makePiece(silhouetteRook(), whiteMat), 0, 0, S);
+
+  placePiece(piecesGroup, makePiece(silhouetteKing(), darkPieceMat, true), 4, 7, S);
+  placePiece(piecesGroup, makePiece(silhouetteQueen(), darkPieceMat), 3, 7, S);
+  placePiece(piecesGroup, makePiece(silhouettePawn(), darkPieceMat), 4, 4, S);
+  placePiece(piecesGroup, makePiece(silhouetteBishop(), darkPieceMat), 2, 6, S);
+  placePiece(piecesGroup, makePiece(silhouetteRook(), darkPieceMat), 7, 7, S);
+
+  scene.add(piecesGroup);
+
+  // ── INTERACTION (manual orbit) ──
+  let yaw = Math.PI / 5;          // horizontal rotation
+  let pitch = Math.PI / 3.5;      // vertical angle (from y-axis)
+  const radius = 11;
+  let isDragging = false;
+  let lastX = 0, lastY = 0;
+  let autoRotate = true;
+  let autoRotateResumeTimeout = null;
+
+  function updateCamera() {
+    const x = radius * Math.sin(pitch) * Math.sin(yaw);
+    const y = radius * Math.cos(pitch);
+    const z = radius * Math.sin(pitch) * Math.cos(yaw);
+    camera.position.set(x, y, z);
+    camera.lookAt(0, 0.5, 0);
+  }
+  updateCamera();
+
+  function onDown(e) {
+    isDragging = true;
+    autoRotate = false;
+    clearTimeout(autoRotateResumeTimeout);
+    const p = e.touches ? e.touches[0] : e;
+    lastX = p.clientX;
+    lastY = p.clientY;
+  }
+  function onMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    const p = e.touches ? e.touches[0] : e;
+    const dx = p.clientX - lastX;
+    const dy = p.clientY - lastY;
+    yaw -= dx * 0.006;
+    pitch -= dy * 0.004;
+    pitch = Math.max(0.35, Math.min(Math.PI / 2 - 0.1, pitch));
+    lastX = p.clientX;
+    lastY = p.clientY;
+    updateCamera();
+  }
+  function onUp() {
+    if (!isDragging) return;
+    isDragging = false;
+    // resume auto-rotate after 3s of inactivity
+    autoRotateResumeTimeout = setTimeout(() => { autoRotate = true; }, 3000);
+  }
+
+  const canvas = renderer.domElement;
+  canvas.addEventListener('mousedown', onDown);
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('mouseup', onUp);
+  canvas.addEventListener('touchstart', onDown, { passive: true });
+  window.addEventListener('touchmove', onMove, { passive: false });
+  window.addEventListener('touchend', onUp);
+
+  // ── RESIZE ──
+  function onResize() {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  }
+  window.addEventListener('resize', onResize);
+
+  // ── RENDER LOOP ──
+  function tick() {
+    if (autoRotate) {
+      yaw += 0.0015;  // slow continuous rotation
+      updateCamera();
+    }
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
+
+</body>
+</html>

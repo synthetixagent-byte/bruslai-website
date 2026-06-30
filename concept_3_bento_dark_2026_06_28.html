@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai AS — Bento Dark concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #08090c;
+    --card: #14161c;
+    --card-hover: #1a1d25;
+    --card-accent: #0f1f1c;
+    --ink: #f4f1e9;
+    --ink-soft: #9a9384;
+    --muted: #5a5447;
+    --line: rgba(244, 241, 233, 0.08);
+    --green: #34d399;
+    --green-deep: #1d3832;
+    --blue: #60a5fa;
+    --amber: #fcd34d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.012em;
+  }
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    padding: 18px 0;
+    background: rgba(8, 9, 12, 0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav.top .row {
+    max-width: 1320px; margin: 0 auto; padding: 0 32px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  nav.top .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 0.98rem;
+  }
+  nav.top .brand-mark {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--green), var(--green-deep));
+  }
+  nav.top ul {
+    list-style: none; display: flex; gap: 32px;
+  }
+  nav.top ul a {
+    color: var(--ink-soft); font-size: 0.85rem; font-weight: 500;
+  }
+  nav.top ul a:hover { color: var(--ink); }
+  nav.top .cta {
+    padding: 10px 18px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 100px;
+    font-size: 0.85rem; font-weight: 600;
+  }
+  nav.top .cta:hover { background: #fff; }
+
+  /* HERO BENTO */
+  .hero {
+    padding: 48px 0 32px;
+  }
+  .hero .top-line {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 32px;
+    letter-spacing: 0.04em;
+  }
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(180px, auto);
+    gap: 14px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .card:hover {
+    background: var(--card-hover);
+    transform: translateY(-2px);
+  }
+  .card .label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .card p {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  /* Big hero card */
+  .card.hero-card {
+    grid-column: span 2;
+    grid-row: span 2;
+    background: linear-gradient(140deg, #14161c 0%, #1a1d25 100%);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .card.hero-card h1 {
+    font-weight: 700;
+    font-size: clamp(36px, 4vw, 64px);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    margin-bottom: 20px;
+  }
+  .card.hero-card h1 em {
+    font-style: italic;
+    font-weight: 500;
+    background: linear-gradient(95deg, var(--green) 0%, #6ee7b7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .card.hero-card .lede {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 460px;
+  }
+  .card.hero-card .cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 14px 22px;
+    background: var(--ink); color: var(--bg);
+    border-radius: 100px;
+    font-size: 0.92rem; font-weight: 600;
+    align-self: flex-start;
+    margin-top: 32px;
+  }
+
+  /* Stat / accent cards */
+  .card.stat-card { background: var(--card-accent); }
+  .card.stat-card .big-num {
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+  .card.stat-card .label-bottom {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .card.geo-card {
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-image: radial-gradient(circle at 80% 20%, rgba(96, 165, 250, 0.15) 0%, transparent 50%);
+  }
+  .card.geo-card .coords {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .card.geo-card h3 { margin-bottom: 4px; }
+
+  /* SECTION HEADERS */
+  .section-head {
+    padding: 80px 0 32px;
+  }
+  .section-head .meta {
+    font-size: 0.7rem;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    margin-bottom: 18px;
+  }
+  .section-head h2 {
+    font-weight: 600;
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 800px;
+  }
+
+  /* PORTFOLIO BENTO */
+  .portfolio-bento {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .portfolio-bento .card { padding: 36px; min-height: 280px; display: flex; flex-direction: column; }
+  .portfolio-bento .card .label {
+    color: var(--green);
+  }
+  .portfolio-bento .card .icon {
+    width: 44px; height: 44px;
+    background: rgba(52, 211, 153, 0.12);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--green);
+    font-size: 1.2rem;
+  }
+  .portfolio-bento .card h3 { font-size: 1.6rem; }
+
+  /* FOCUS — 3 column bento */
+  .focus-bento {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .focus-bento .card {
+    padding: 32px;
+    min-height: 220px;
+  }
+  .focus-bento .num {
+    font-size: 0.85rem;
+    color: var(--blue);
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  .focus-bento h4 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .focus-bento p {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  /* PRINCIPLES */
+  .principles-bento {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .principles-bento .card {
+    padding: 36px;
+    min-height: 240px;
+    background-image: radial-gradient(circle at 90% 10%, rgba(252, 211, 77, 0.06) 0%, transparent 60%);
+  }
+  .principles-bento .pnum {
+    font-size: 0.78rem;
+    color: var(--amber);
+    margin-bottom: 24px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+  .principles-bento h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .principles-bento p {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  /* CONTACT */
+  .contact-bento {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 14px;
+  }
+  .contact-bento .main {
+    padding: 56px 48px;
+    background: linear-gradient(140deg, #14161c 0%, #0f1f1c 100%);
+  }
+  .contact-bento .main h3 {
+    font-weight: 600;
+    font-size: clamp(28px, 3vw, 44px);
+    letter-spacing: -0.025em;
+    margin-bottom: 28px;
+    line-height: 1.05;
+  }
+  .contact-bento .main .email-cta {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 18px 30px;
+    background: var(--green);
+    color: var(--bg);
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .contact-bento .main .email-cta:hover { background: #6ee7b7; }
+  .contact-bento .addr-card {
+    padding: 36px;
+  }
+  .contact-bento .addr-card .label {
+    color: var(--blue);
+  }
+  .contact-bento .addr-card p {
+    font-size: 1.05rem;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 56px 0 48px;
+    margin-top: 80px;
+    border-top: 1px solid var(--line);
+  }
+  footer .row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 32px; flex-wrap: wrap;
+  }
+  footer .legal {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  footer .legal strong { color: var(--ink); font-weight: 600; }
+  footer ul {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 8px;
+    font-size: 0.85rem;
+  }
+  footer ul a { color: var(--ink-soft); }
+  footer ul a:hover { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .bento, .portfolio-bento, .focus-bento, .principles-bento, .contact-bento {
+      grid-template-columns: 1fr !important;
+    }
+    .card.hero-card { grid-column: span 1; grid-row: auto; padding: 32px; }
+    nav.top ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="row">
+    <a class="brand">
+      <span class="brand-mark"></span>
+      Brus Lai
+    </a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#focus">Focus</a></li>
+      <li><a href="#approach">Approach</a></li>
+    </ul>
+    <a class="cta" href="#contact">Contact →</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="top-line">— Norwegian holding company · Est. 2024 · Strusshamn</div>
+    <div class="bento">
+      <div class="card hero-card">
+        <div>
+          <div class="label">Brus Lai AS</div>
+          <h1>Patient capital for the <em>long game</em>.</h1>
+          <p class="lede">Brus Lai AS commits patient capital to technology and AI, and owns a small set of software ventures alongside.</p>
+        </div>
+        <a class="cta" href="#portfolio">Explore portfolio →</a>
+      </div>
+      <div class="card stat-card">
+        <div class="big-num">10+</div>
+        <div class="label-bottom">Year horizon on positions we hold</div>
+      </div>
+      <div class="card stat-card">
+        <div class="big-num">3</div>
+        <div class="label-bottom">Owned ventures we operate ourselves</div>
+      </div>
+      <div class="card geo-card">
+        <div class="coords">60.4°N / 5.4°E</div>
+        <h3>Strusshamn</h3>
+        <p>Operated from Western Norway</p>
+      </div>
+      <div class="card">
+        <div class="label">Approach</div>
+        <h3>Operator-led</h3>
+        <p>We build the products we back.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="container">
+    <div class="section-head">
+      <div class="meta">— About</div>
+      <h2>Long-term capital. Operator mindset.</h2>
+    </div>
+    <div class="bento">
+      <div class="card hero-card" style="background:#0f1f1c;">
+        <div>
+          <div class="label">Note 01</div>
+          <p style="font-size:1.15rem;line-height:1.6;color:var(--ink);margin-top:16px;">Brus Lai AS is a privately held Norwegian holding company. Our work is concentrated capital deployment — long-term positions in technology and the AI ecosystem, alongside a small set of owned software ventures.</p>
+        </div>
+      </div>
+      <div class="card" style="grid-column: span 2; padding: 40px;">
+        <div class="label">Note 02</div>
+        <p style="font-size:1.15rem;line-height:1.6;color:var(--ink);margin-top:16px;">We're not a fund. We don't operate on exit timelines. Operating our own ventures keeps the investment thinking grounded in real product reality, not slide decks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="container">
+    <div class="section-head">
+      <div class="meta">— Portfolio</div>
+      <h2>Where our work lives.</h2>
+    </div>
+    <div class="portfolio-bento">
+      <div class="card">
+        <div class="icon">●</div>
+        <div class="label">Capital</div>
+        <h3>Long-term positions</h3>
+        <p>Concentrated, multi-year positions in major technology platforms and the AI ecosystem.</p>
+      </div>
+      <div class="card">
+        <div class="icon">▣</div>
+        <div class="label">Software</div>
+        <h3>Mobile games</h3>
+        <p>Daily puzzles for iOS and Android. Long sessions per user, low marketing overhead, products people return to without prompting.</p>
+      </div>
+      <div class="card">
+        <div class="icon">◇</div>
+        <div class="label">In development</div>
+        <h3>Accounting software</h3>
+        <p>Modern bookkeeping that just works. Built for small businesses and accountants who value their time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="focus">
+  <div class="container">
+    <div class="section-head">
+      <div class="meta">— Focus</div>
+      <h2>Where we look.</h2>
+    </div>
+    <div class="focus-bento">
+      <div class="card">
+        <div class="num">01</div>
+        <h4>AI infrastructure and applications</h4>
+        <p>Concentrated positions in the companies architecting the next decade of compute, models, and applied AI — held with multi-year conviction.</p>
+      </div>
+      <div class="card">
+        <div class="num">02</div>
+        <h4>US technology platforms</h4>
+        <p>Durable franchises with structural advantages: distribution, data, switching costs. We tend to own the architects, not the visitors.</p>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <h4>Emerging markets, selectively</h4>
+        <p>Quiet exposure to under-covered geographies where governance and growth align.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="approach">
+  <div class="container">
+    <div class="section-head">
+      <div class="meta">— Approach</div>
+      <h2>How we work.</h2>
+    </div>
+    <div class="principles-bento">
+      <div class="card">
+        <div class="pnum">PRINCIPLE 01</div>
+        <h4>Decade-plus horizon</h4>
+        <p>Software takes years to compound. We don't shortcut that.</p>
+      </div>
+      <div class="card">
+        <div class="pnum">PRINCIPLE 02</div>
+        <h4>Operator-led</h4>
+        <p>We build the products we back, which keeps our investment thinking grounded in real product reality.</p>
+      </div>
+      <div class="card">
+        <div class="pnum">PRINCIPLE 03</div>
+        <h4>Boring is good</h4>
+        <p>We optimise for products that work reliably and businesses that don't blow up. Growth comes from that, not from hype.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="section-head">
+      <div class="meta">— Contact</div>
+      <h2>Enquiries.</h2>
+    </div>
+    <div class="contact-bento">
+      <div class="card main">
+        <div class="label">General</div>
+        <h3>Have something to discuss?</h3>
+        <a class="email-cta" href="mailto:contact@bruslai.no">Send us an email →</a>
+      </div>
+      <div class="card addr-card">
+        <div class="label">Registered office</div>
+        <p>Eidsvikvegen 26<br>5302 Strusshamn<br>Norway</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="legal">
+        <strong>Brus Lai AS</strong> · Norwegian limited company (Aksjeselskap)<br>
+        Org. nr. 922 712 476 · Eidsvikvegen 26, 5302 Strusshamn, Norway<br>
+        © 2026 Brus Lai AS. All rights reserved.
+      </div>
+      <ul>
+        <li><a href="privacy.html">Privacy policy</a></li>
+        <li><a href="terms.html">Terms of service</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

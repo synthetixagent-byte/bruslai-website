@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai AS — A Norwegian holding company</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f0e4;
+    --bg-soft: #faf5ea;
+    --ink: #1a1410;
+    --ink-soft: #4a3f30;
+    --muted: #8a7a5e;
+    --line: #d8cdb0;
+    --accent: #7d2828;     /* deep burgundy */
+    --accent-soft: #a83d3d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+
+  /* ── MASTHEAD: full-bleed fjord image with overlay text ── */
+  .masthead {
+    position: relative;
+    height: 92vh;
+    min-height: 600px;
+    background-image:
+      linear-gradient(180deg, rgba(20,16,10,0.20) 0%, rgba(20,16,10,0.10) 40%, rgba(20,16,10,0.55) 100%),
+      url('interlude.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 36px 56px 80px;
+  }
+  .masthead .top-row {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .masthead .brand {
+    font-weight: 600; font-size: 1rem;
+    color: rgba(255,255,255,0.95);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .masthead .meta {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+  }
+  .masthead .text-block {
+    max-width: 880px;
+  }
+  .masthead .label {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 24px;
+  }
+  .masthead h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(48px, 6.5vw, 96px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    max-width: 920px;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    color: #f0d8a8;
+  }
+
+  /* ── ESSAY ── */
+  .essay {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 120px 32px 80px;
+  }
+  .essay-eyebrow {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--accent);
+    font-size: 1.15rem;
+    margin-bottom: 32px;
+  }
+  .essay p {
+    font-size: 1.18rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+  .essay p:first-of-type::first-letter {
+    font-family: 'Instrument Serif', serif;
+    float: left;
+    font-size: 4.2rem;
+    line-height: 0.85;
+    padding: 6px 14px 0 0;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  /* Ornamental divider */
+  .divider {
+    text-align: center;
+    color: var(--muted);
+    letter-spacing: 1.4em;
+    font-size: 1rem;
+    margin: 60px 0 50px;
+    padding-left: 1.4em; /* compensate for letter-spacing visual offset */
+  }
+
+  /* ── INTERLUDE — second photo strip ── */
+  .interlude {
+    padding: 0;
+    margin: 100px 0;
+  }
+  .interlude .strip {
+    height: 380px;
+    background-image:
+      linear-gradient(rgba(20,16,10,0.15), rgba(20,16,10,0.35)),
+      url('interlude.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+  }
+  .interlude .caption {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(20px, 2.4vw, 32px);
+    text-align: center;
+    max-width: 720px;
+    padding: 0 24px;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.45);
+    line-height: 1.3;
+  }
+  .interlude .caption small {
+    display: block;
+    margin-top: 18px;
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ── VENTURES LIST (inline, prose-style) ── */
+  .ventures {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .ventures-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 30px;
+    font-weight: 500;
+  }
+  .ventures-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 40px;
+  }
+  .ventures-list li {
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+  .ventures-list li:last-child { border-bottom: 1px solid var(--line); }
+  .ventures-list li strong {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 1.4rem;
+    display: block;
+    margin-bottom: 6px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .ventures-list li span {
+    color: var(--ink-soft);
+    display: block;
+  }
+  .ventures-list li .meta {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-right: 14px;
+    font-weight: 500;
+  }
+
+  /* ── SIGNOFF + CONTACT ── */
+  .signoff {
+    max-width: 720px;
+    margin: 80px auto 0;
+    padding: 0 32px;
+  }
+  .signoff .closing {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    margin-bottom: 40px;
+    max-width: 540px;
+  }
+  .signoff .email-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 30px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .signoff .email-cta:hover { background: var(--accent-soft); }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 120px;
+    padding: 50px 56px 40px;
+    border-top: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+  footer .row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 32px; flex-wrap: wrap;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  footer .legal {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+  }
+  footer .legal strong { color: var(--ink); font-weight: 600; }
+  footer ul {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+    font-size: 0.82rem;
+  }
+  footer ul a { color: var(--muted); text-decoration: none; }
+  footer ul a:hover { color: var(--ink); }
+
+  @media (max-width: 720px) {
+    .masthead { padding: 24px 24px 50px; min-height: 70vh; }
+    .essay, .ventures, .signoff { padding: 0 24px; }
+    .essay { padding-top: 70px; padding-bottom: 50px; }
+    .interlude .strip { height: 280px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="top-row">
+    <a class="brand" href="#">Brus Lai AS</a>
+    <div class="meta">Operator's Note · 2026</div>
+  </div>
+  <div class="text-block">
+    <div class="label">— a note from a Norwegian holding company</div>
+    <h1>We commit <em>patient capital</em> to the long game.</h1>
+  </div>
+</header>
+
+<article class="essay">
+  <div class="essay-eyebrow">— our work, in three paragraphs</div>
+  <p>Brus Lai AS is a privately held Norwegian holding company. Our work is concentrated capital deployment — long-term positions in technology and the AI ecosystem, alongside a small set of owned software ventures.</p>
+  <p>We're not a fund. We don't operate on exit timelines. Operating our own ventures keeps the investment thinking grounded in real product reality, not slide decks.</p>
+  <p>Software takes years to compound. We don't shortcut that. We build the products we back, which keeps the investment thinking honest. We optimise for products that work reliably and businesses that don't blow up — growth comes from that, not from hype.</p>
+</article>
+
+<div class="divider">·  ·  ·</div>
+
+<section class="ventures">
+  <div class="ventures-label">— Where our work lives</div>
+  <ul class="ventures-list">
+    <li>
+      <span class="meta">Capital</span>
+      <strong>Long-term positions</strong>
+      <span>Concentrated, multi-year positions in major technology platforms and the AI ecosystem.</span>
+    </li>
+    <li>
+      <span class="meta">Software</span>
+      <strong>Mobile games</strong>
+      <span>Daily puzzles for iOS and Android. Long sessions per user, low marketing overhead, products people return to without prompting.</span>
+    </li>
+    <li>
+      <span class="meta">In development</span>
+      <strong>Accounting software</strong>
+      <span>Modern bookkeeping that just works. Built for small businesses and accountants who value their time.</span>
+    </li>
+  </ul>
+</section>
+
+<aside class="interlude">
+  <div class="strip">
+    <div class="caption">
+      Operated from Western Norway.
+      <small>Strusshamn  ·  60.4° N</small>
+    </div>
+  </div>
+</aside>
+
+<section class="signoff">
+  <p class="closing">If any of this resonates — we'd like to hear from you.</p>
+  <a class="email-cta" href="mailto:contact@bruslai.no">Send us an email →</a>
+</section>
+
+<footer>
+  <div class="row">
+    <div class="legal">
+      <strong>Brus Lai AS</strong> · Norwegian limited company (Aksjeselskap)<br>
+      Org. nr. 922 712 476 · Eidsvikvegen 26, 5302 Strusshamn, Norway<br>
+      © 2026 Brus Lai AS. All rights reserved.
+    </div>
+    <ul>
+      <li><a href="privacy.html">Privacy policy</a></li>
+      <li><a href="terms.html">Terms of service</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>

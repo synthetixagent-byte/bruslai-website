@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai AS — glass chess v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #050608;
+    --cream: #f0eada;
+    --cream-dim: #9a9384;
+    --muted: #5a5447;
+    --line: rgba(240, 234, 218, 0.08);
+    --green: #1d3832;
+    --green-light: #2c4636;
+    --teal: #4fd1c5;
+    --teal-soft: #5eead4;
+    --lime: #d4f54f;
+  }
+  html, body { height: 100%; overflow-x: hidden; }
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.012em;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 200;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+
+  /* ── NAV ── */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(5, 6, 8, 0.5);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+  }
+  nav.top .brand {
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+  }
+  nav.top ul {
+    list-style: none;
+    display: flex;
+    gap: 38px;
+  }
+  nav.top ul a {
+    color: var(--cream-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  nav.top ul a:hover { color: var(--cream); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 56px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* TEXT SIDE — top-aligned like design 1 */
+  .text-side {
+    z-index: 5;
+    padding-top: 40px;
+    max-width: 640px;
+  }
+  .eyebrow {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 36px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: 0.04em;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--muted);
+  }
+  h1 {
+    font-weight: 700;
+    font-size: clamp(56px, 7.5vw, 112px);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    margin-bottom: 36px;
+    color: var(--cream);
+  }
+  h1 .accent {
+    background: linear-gradient(95deg, var(--teal-soft) 0%, var(--teal) 50%, #2dd4bf 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: italic;
+    font-weight: 600;
+  }
+  .sub {
+    font-size: 1.1rem;
+    color: var(--cream-dim);
+    line-height: 1.6;
+    max-width: 460px;
+    margin-bottom: 48px;
+  }
+
+  /* CTA — bigger, more confident like design 2 */
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 26px 18px 32px;
+    background: var(--green);
+    border-radius: 100px;
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.25s, transform 0.25s;
+    border: 1px solid rgba(240, 234, 218, 0.06);
+  }
+  .cta:hover {
+    background: var(--green-light);
+    transform: translateY(-1px);
+  }
+  .cta .arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--teal-soft);
+    border-radius: 50%;
+    color: var(--green);
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: transform 0.25s;
+  }
+  .cta:hover .arrow { transform: translateX(3px); }
+
+  /* ── CHESS SIDE ── */
+  .chess-side {
+    position: relative;
+    height: 640px;
+    z-index: 1;
+  }
+  #chess-canvas {
+    position: absolute;
+    inset: 0;
+    cursor: grab;
+  }
+  #chess-canvas:active { cursor: grabbing; }
+
+  /* Bloom glow behind chess */
+  .chess-side::before {
+    content: '';
+    position: absolute;
+    inset: -5%;
+    background: radial-gradient(ellipse at 50% 60%, rgba(79, 209, 197, 0.15) 0%, transparent 55%);
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hint {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 6px 16px;
+    background: rgba(240, 234, 218, 0.04);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeIn 1.4s ease 1.2s forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 100px 24px 40px;
+    }
+    .chess-side { height: 440px; }
+    nav.top { padding: 16px 24px; }
+    nav.top ul { gap: 22px; }
+    nav.top ul a { font-size: 0.78rem; }
+    h1 { font-size: clamp(40px, 10vw, 64px); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a class="brand">Brus Lai AS</a>
+  <ul>
+    <li><a>Ventures</a></li>
+    <li><a>Approach</a></li>
+    <li><a>Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="text-side">
+    <div class="eyebrow">Norwegian holding company</div>
+    <h1>Patient capital.<br>Long-<span class="accent">game</span> play.</h1>
+    <p class="sub">Strategic positions in technology and AI, paired with a small set of owned software and game ventures we operate ourselves.</p>
+    <a class="cta">
+      View portfolio
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <div class="chess-side">
+    <canvas id="chess-canvas"></canvas>
+    <div class="hint">Drag to rotate</div>
+  </div>
+</section>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { Reflector } from 'three/addons/objects/Reflector.js';
+
+const canvas = document.getElementById('chess-canvas');
+const container = canvas.parentElement;
+
+const scene = new THREE.Scene();
+scene.background = null;
+
+const camera = new THREE.PerspectiveCamera(
+  28, container.clientWidth / container.clientHeight, 0.1, 100
+);
+
+const renderer = new THREE.WebGLRenderer({
+  canvas, antialias: true, alpha: true
+});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+// HDR-ish environment for glass reflections
+const pmrem = new THREE.PMREMGenerator(renderer);
+const envScene = new RoomEnvironment();
+scene.environment = pmrem.fromScene(envScene, 0.04).texture;
+
+// ── LIGHTS ──
+scene.add(new THREE.HemisphereLight(0x88aaff, 0x080a0c, 0.35));
+
+const key = new THREE.DirectionalLight(0xffffff, 1.6);
+key.position.set(7, 12, 9);
+scene.add(key);
+
+const tealLight = new THREE.PointLight(0x4fd1c5, 12, 22);
+tealLight.position.set(-5, 6, 5);
+scene.add(tealLight);
+
+const blueRim = new THREE.PointLight(0x6aaaff, 6, 16);
+blueRim.position.set(6, 4, -4);
+scene.add(blueRim);
+
+const fill = new THREE.DirectionalLight(0xffe0a8, 0.3);
+fill.position.set(-6, 2, -6);
+scene.add(fill);
+
+// ── REFLECTIVE FLOOR ──
+const floorGeo = new THREE.CircleGeometry(20, 64);
+const floor = new Reflector(floorGeo, {
+  textureWidth: window.innerWidth * window.devicePixelRatio,
+  textureHeight: window.innerHeight * window.devicePixelRatio,
+  color: 0x0a0d10,
+});
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -0.01;
+scene.add(floor);
+
+// Tint overlay on floor to darken reflection
+const floorTint = new THREE.Mesh(
+  new THREE.CircleGeometry(20, 64),
+  new THREE.MeshBasicMaterial({ color: 0x050608, transparent: true, opacity: 0.7 })
+);
+floorTint.rotation.x = -Math.PI / 2;
+floorTint.position.y = 0.001;
+scene.add(floorTint);
+
+// ── GLASS BOARD ──
+const BOARD_SIZE = 8;
+const SQUARE = 0.55;
+const TOTAL = BOARD_SIZE * SQUARE;
+
+const clearGlassMat = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff,
+  transmission: 0.95,
+  ior: 1.5,
+  thickness: 0.3,
+  roughness: 0.04,
+  metalness: 0.0,
+  clearcoat: 1.0,
+  clearcoatRoughness: 0.02,
+  attenuationColor: new THREE.Color(0xb0e0d8),
+  attenuationDistance: 2.0,
+  envMapIntensity: 1.5,
+  side: THREE.DoubleSide,
+});
+
+const tintedGlassMat = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff,
+  transmission: 0.85,
+  ior: 1.5,
+  thickness: 0.5,
+  roughness: 0.08,
+  metalness: 0.0,
+  clearcoat: 1.0,
+  clearcoatRoughness: 0.05,
+  attenuationColor: new THREE.Color(0x2d6e66),
+  attenuationDistance: 0.4,
+  envMapIntensity: 1.2,
+  side: THREE.DoubleSide,
+});
+
+// Build board with alternating clear/tinted squares
+const boardGroup = new THREE.Group();
+for (let x = 0; x < BOARD_SIZE; x++) {
+  for (let z = 0; z < BOARD_SIZE; z++) {
+    const isLight = (x + z) % 2 === 0;
+    const sq = new THREE.Mesh(
+      new THREE.BoxGeometry(SQUARE * 0.98, 0.18, SQUARE * 0.98),
+      isLight ? clearGlassMat : tintedGlassMat
+    );
+    sq.position.set(
+      (x - BOARD_SIZE / 2 + 0.5) * SQUARE,
+      0.09,
+      (z - BOARD_SIZE / 2 + 0.5) * SQUARE
+    );
+    boardGroup.add(sq);
+  }
+}
+
+// Board base frame
+const frameGeo = new THREE.BoxGeometry(TOTAL + 0.3, 0.08, TOTAL + 0.3);
+const frame = new THREE.Mesh(frameGeo, clearGlassMat);
+frame.position.y = 0.04;
+boardGroup.add(frame);
+
+scene.add(boardGroup);
+
+// ── PIECES (Lathe + Extrude for knight) ──
+const pieceMat = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff,
+  transmission: 0.97,
+  ior: 1.52,
+  thickness: 0.4,
+  roughness: 0.02,
+  metalness: 0.0,
+  clearcoat: 1.0,
+  clearcoatRoughness: 0.0,
+  attenuationColor: new THREE.Color(0x88d8d0),
+  attenuationDistance: 1.0,
+  envMapIntensity: 1.8,
+  side: THREE.DoubleSide,
+});
+
+function lathePiece(silhouette) {
+  const pts = silhouette.map(([r, y]) => new THREE.Vector2(r, y));
+  return new THREE.LatheGeometry(pts, 64);
+}
+
+const pawnGeo = lathePiece([
+  [0.00, 0.00], [0.28, 0.00], [0.28, 0.04],
+  [0.24, 0.06], [0.18, 0.08], [0.16, 0.12],
+  [0.18, 0.20], [0.20, 0.28], [0.18, 0.32],
+  [0.14, 0.36], [0.16, 0.40], [0.20, 0.44],
+  [0.18, 0.48], [0.10, 0.50], [0.00, 0.50]
+]);
+const rookGeo = lathePiece([
+  [0.00, 0.00], [0.30, 0.00], [0.30, 0.05],
+  [0.24, 0.08], [0.20, 0.11], [0.20, 0.42],
+  [0.24, 0.44], [0.27, 0.46], [0.27, 0.52],
+  [0.20, 0.52], [0.20, 0.55], [0.00, 0.55]
+]);
+const bishopGeo = lathePiece([
+  [0.00, 0.00], [0.28, 0.00], [0.28, 0.05],
+  [0.22, 0.08], [0.16, 0.11], [0.16, 0.36],
+  [0.20, 0.48], [0.15, 0.54], [0.12, 0.58],
+  [0.18, 0.62], [0.09, 0.74], [0.00, 0.78]
+]);
+const queenGeo = lathePiece([
+  [0.00, 0.00], [0.31, 0.00], [0.31, 0.06],
+  [0.24, 0.09], [0.18, 0.13], [0.18, 0.55],
+  [0.22, 0.65], [0.18, 0.70], [0.16, 0.74],
+  [0.24, 0.78], [0.27, 0.84], [0.18, 0.92],
+  [0.00, 0.95]
+]);
+const kingGeo = lathePiece([
+  [0.00, 0.00], [0.33, 0.00], [0.33, 0.07],
+  [0.26, 0.10], [0.20, 0.14], [0.20, 0.60],
+  [0.24, 0.70], [0.20, 0.76], [0.18, 0.80],
+  [0.26, 0.86], [0.30, 0.92], [0.18, 1.00],
+  [0.00, 1.02]
+]);
+
+// Knight via ExtrudeGeometry (2D horse-head profile, extruded)
+function makeKnightGeo() {
+  const shape = new THREE.Shape();
+  // Base
+  shape.moveTo(-0.20, 0);
+  shape.lineTo(0.20, 0);
+  shape.lineTo(0.20, 0.06);
+  shape.lineTo(0.15, 0.10);
+  // Body up
+  shape.lineTo(0.13, 0.30);
+  shape.lineTo(0.16, 0.38);
+  // Chest
+  shape.lineTo(0.22, 0.45);
+  shape.lineTo(0.30, 0.52);
+  // Nose
+  shape.lineTo(0.32, 0.60);
+  shape.lineTo(0.26, 0.66);
+  shape.lineTo(0.20, 0.68);
+  // Mouth dip
+  shape.lineTo(0.12, 0.62);
+  shape.lineTo(0.06, 0.64);
+  // Top of head / ears
+  shape.lineTo(0.04, 0.74);
+  shape.lineTo(-0.02, 0.76);
+  shape.lineTo(-0.10, 0.72);
+  // Mane back
+  shape.lineTo(-0.16, 0.62);
+  shape.lineTo(-0.18, 0.50);
+  shape.lineTo(-0.16, 0.40);
+  // Back of body
+  shape.lineTo(-0.14, 0.30);
+  shape.lineTo(-0.17, 0.20);
+  shape.lineTo(-0.20, 0.10);
+  shape.lineTo(-0.20, 0);
+
+  const geo = new THREE.ExtrudeGeometry(shape, {
+    depth: 0.14,
+    bevelEnabled: true,
+    bevelSegments: 4,
+    steps: 1,
+    bevelSize: 0.012,
+    bevelThickness: 0.012,
+  });
+  geo.translate(0, 0, -0.07);
+  return geo;
+}
+const knightGeo = makeKnightGeo();
+
+function piece(geo, withCross = false, isKnight = false) {
+  const mesh = new THREE.Mesh(geo, pieceMat);
+  if (isKnight) return mesh;
+  if (withCross) {
+    const group = new THREE.Group();
+    group.add(mesh);
+    const v = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.14, 0.04), pieceMat);
+    v.position.y = 1.10;
+    const h = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.04, 0.04), pieceMat);
+    h.position.y = 1.12;
+    group.add(v); group.add(h);
+    return group;
+  }
+  return mesh;
+}
+
+function placeOnSquare(parent, p, file, rank, scale = 1.0, faceForward = false) {
+  p.position.set((file - 3.5) * SQUARE, 0.18, (rank - 3.5) * SQUARE);
+  p.scale.set(scale, scale, scale);
+  if (faceForward) {
+    // knights face inward (toward middle)
+    p.rotation.y = rank < 4 ? 0 : Math.PI;
+  }
+  parent.add(p);
+}
+
+const piecesGroup = new THREE.Group();
+const S = 0.85;
+
+// White side (rank 0 = back row, rank 1 = pawns)
+const whiteBack = [
+  ['rook', 0], ['knight', 1], ['bishop', 2], ['queen', 3],
+  ['king', 4], ['bishop', 5], ['knight', 6], ['rook', 7],
+];
+whiteBack.forEach(([type, file]) => {
+  let p;
+  if (type === 'rook') p = piece(rookGeo);
+  if (type === 'knight') p = piece(knightGeo, false, true);
+  if (type === 'bishop') p = piece(bishopGeo);
+  if (type === 'queen') p = piece(queenGeo);
+  if (type === 'king') p = piece(kingGeo, true);
+  placeOnSquare(piecesGroup, p, file, 0, S, type === 'knight');
+});
+for (let f = 0; f < 8; f++) {
+  placeOnSquare(piecesGroup, piece(pawnGeo), f, 1, S);
+}
+
+// Black side (mirrored)
+const blackBack = [
+  ['rook', 0], ['knight', 1], ['bishop', 2], ['queen', 3],
+  ['king', 4], ['bishop', 5], ['knight', 6], ['rook', 7],
+];
+blackBack.forEach(([type, file]) => {
+  let p;
+  if (type === 'rook') p = piece(rookGeo);
+  if (type === 'knight') p = piece(knightGeo, false, true);
+  if (type === 'bishop') p = piece(bishopGeo);
+  if (type === 'queen') p = piece(queenGeo);
+  if (type === 'king') p = piece(kingGeo, true);
+  placeOnSquare(piecesGroup, p, file, 7, S, type === 'knight');
+});
+for (let f = 0; f < 8; f++) {
+  placeOnSquare(piecesGroup, piece(pawnGeo), f, 6, S);
+}
+
+scene.add(piecesGroup);
+
+// ── INTERACTION ──
+let yaw = Math.PI / 5;
+let pitch = Math.PI / 2.6;   // start higher angle so we see the board well
+const radius = 7.5;
+let isDragging = false;
+let lastX = 0, lastY = 0;
+let autoRotate = true;
+let autoRotateResumeTimeout = null;
+
+function updateCamera() {
+  const x = radius * Math.sin(pitch) * Math.sin(yaw);
+  const y = radius * Math.cos(pitch);
+  const z = radius * Math.sin(pitch) * Math.cos(yaw);
+  camera.position.set(x, y, z);
+  camera.lookAt(0, 0.3, 0);
+}
+updateCamera();
+
+function onDown(e) {
+  isDragging = true;
+  autoRotate = false;
+  clearTimeout(autoRotateResumeTimeout);
+  const p = e.touches ? e.touches[0] : e;
+  lastX = p.clientX;
+  lastY = p.clientY;
+}
+function onMove(e) {
+  if (!isDragging) return;
+  e.preventDefault();
+  const p = e.touches ? e.touches[0] : e;
+  yaw -= (p.clientX - lastX) * 0.006;
+  pitch -= (p.clientY - lastY) * 0.004;
+  pitch = Math.max(0.4, Math.min(Math.PI / 2 - 0.15, pitch));
+  lastX = p.clientX;
+  lastY = p.clientY;
+  updateCamera();
+}
+function onUp() {
+  if (!isDragging) return;
+  isDragging = false;
+  autoRotateResumeTimeout = setTimeout(() => { autoRotate = true; }, 3000);
+}
+
+canvas.addEventListener('mousedown', onDown);
+window.addEventListener('mousemove', onMove);
+window.addEventListener('mouseup', onUp);
+canvas.addEventListener('touchstart', onDown, { passive: true });
+window.addEventListener('touchmove', onMove, { passive: false });
+window.addEventListener('touchend', onUp);
+
+function onResize() {
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+}
+window.addEventListener('resize', onResize);
+
+function tick() {
+  if (autoRotate) {
+    yaw += 0.0015;
+    updateCamera();
+  }
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+tick();
+</script>
+
+</body>
+</html>

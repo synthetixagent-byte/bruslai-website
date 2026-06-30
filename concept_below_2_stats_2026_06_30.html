@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai — Concept 2: Stats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700&family=Archivo:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#101822; --bg2:#161f2a;
+  --accent:#c8dcee; --accent2:#f8e0c8;
+  --text:#f5f7fb; --muted:#c0c9d8; --faint:#8a94a4;
+  --border:rgba(245,247,251,.12);
+}
+body{background:var(--bg);color:var(--text);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.concept-label{position:fixed;top:20px;left:20px;z-index:100;padding:8px 14px;background:rgba(245,247,251,.06);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:100px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--accent)}
+
+.interlude{position:relative;height:60vh;min-height:380px;background-image:linear-gradient(rgba(16,24,34,.35),rgba(16,24,34,.55)),url('interlude.jpg');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.interlude-caption{text-align:center;color:var(--text);font-family:'Unbounded',sans-serif;font-style:italic;font-weight:300;font-size:clamp(22px,2.8vw,40px);max-width:760px;padding:0 24px;text-shadow:0 2px 14px rgba(0,0,0,.5);letter-spacing:-.01em}
+.interlude-caption small{display:block;margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--accent2);font-style:normal;font-weight:400;text-shadow:none}
+
+/* STATS DASHBOARD */
+.stats-header{text-align:center;padding:12vh 32px 6vh}
+.stats-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--accent);margin-bottom:20px}
+.stats-header h2{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(34px,4.5vw,60px);line-height:1;letter-spacing:-.025em;max-width:18ch;margin:0 auto}
+
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);padding:0 clamp(20px,4vw,60px) 12vh;max-width:1400px;margin:0 auto;border:1px solid var(--border)}
+.stat-cell{background:var(--bg);padding:clamp(40px,6vw,80px) clamp(28px,4vw,60px);min-height:340px;display:flex;flex-direction:column;justify-content:space-between;position:relative;transition:background .4s}
+.stat-cell:hover{background:var(--bg2)}
+.stat-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--faint);text-transform:uppercase}
+.stat-num{font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(72px,11vw,180px);line-height:.9;letter-spacing:-.05em;background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;margin:24px 0}
+.stat-num.word{font-size:clamp(40px,6vw,90px);line-height:1;font-weight:500;letter-spacing:-.035em}
+.stat-context{font-size:16px;line-height:1.55;color:var(--muted);font-weight:300;max-width:36ch}
+
+.contact-mini{text-align:center;padding:10vh 24px 8vh;border-top:1px solid var(--border)}
+.contact-mini h3{font-family:'Unbounded',sans-serif;font-weight:300;font-size:clamp(28px,3.4vw,44px);line-height:1;margin-bottom:32px;letter-spacing:-.025em}
+.contact-mini .mail{display:inline-block;padding:16px 32px;background:linear-gradient(100deg,var(--accent),var(--accent2));color:var(--bg);border-radius:100px;text-decoration:none;font-size:16px;font-weight:500}
+.contact-mini .addr{margin-top:36px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint);letter-spacing:.04em}
+
+footer{padding:32px 40px;border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);text-align:center;letter-spacing:.05em;line-height:1.8}
+
+@media (max-width:800px){.stat-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="concept-label">CONCEPT 02 / STATS</div>
+
+<section class="interlude">
+  <div class="interlude-caption">
+    Operated from Western Norway.
+    <small>STRUSSHAMN &middot; 60.4&deg; N</small>
+  </div>
+</section>
+
+<header class="stats-header">
+  <div class="stats-eyebrow">— The numbers behind the work</div>
+  <h2>What Brus Lai holds, in four figures.</h2>
+</header>
+
+<div class="stat-grid">
+
+  <div class="stat-cell">
+    <div class="stat-tag">01 / OWNED VENTURES</div>
+    <div class="stat-num">3</div>
+    <div class="stat-context">Software companies and games we operate ourselves. Capital, mobile games, and accounting software in development.</div>
+  </div>
+
+  <div class="stat-cell">
+    <div class="stat-tag">02 / YEAR HORIZON</div>
+    <div class="stat-num">10+</div>
+    <div class="stat-context">Conviction-held positions. We hold for years, not quarters. Software takes time to compound.</div>
+  </div>
+
+  <div class="stat-cell">
+    <div class="stat-tag">03 / EXIT TIMELINES</div>
+    <div class="stat-num">0</div>
+    <div class="stat-context">We're not a fund. We don't operate on exit timelines. The thesis is the timeline.</div>
+  </div>
+
+  <div class="stat-cell">
+    <div class="stat-tag">04 / FOCUS AREAS</div>
+    <div class="stat-num word">AI &middot; US &middot; EM</div>
+    <div class="stat-context">AI infrastructure and applications, US technology platforms, and emerging markets, selectively.</div>
+  </div>
+
+</div>
+
+<section class="contact-mini">
+  <h3>Let's talk.</h3>
+  <a class="mail" href="#" onclick="this.href='mailto:'+atob('Y29udGFjdEBicnVzbGFpLm5v');return true;">contact@bruslai.no →</a>
+  <div class="addr">Eidsvikvegen 26 &middot; 5302 Strusshamn &middot; Norway</div>
+</section>
+
+<footer>
+  Brus Lai AS &middot; Aksjeselskap &middot; Org. nr. 922 712 476 &middot; &copy; 2026
+</footer>
+
+</body>
+</html>

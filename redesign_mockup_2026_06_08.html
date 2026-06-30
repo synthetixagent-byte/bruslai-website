@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai — redesign mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a08;
+    --bg-mid: #0a1410;
+    --bg-light: #0f1d18;
+    --accent: #34d399;
+    --accent-soft: #6ee7b7;
+    --accent-deep: #10b981;
+    --text: #f0f4f1;
+    --text-muted: #889a8f;
+    --text-dim: #4e5d54;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* GRAIN TEXTURE — subtle filmic effect over everything */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: overlay;
+  }
+
+  /* AMBIENT BACKGROUND GLOW — radial gradient creating atmosphere */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 50%, rgba(52,211,153,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 50% at 50% 100%, rgba(16,185,129,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 28px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    mix-blend-mode: difference;
+  }
+  .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 6px;
+    color: var(--text);
+  }
+  .logo .dot { color: var(--accent); }
+  .topbar-actions { display: flex; gap: 10px; }
+  .pill {
+    padding: 10px 18px;
+    border: 1px solid rgba(240,244,241,0.18);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+    background: rgba(10,20,16,0.5);
+    backdrop-filter: blur(20px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .pill:hover { border-color: var(--accent); background: rgba(52,211,153,0.08); }
+  .pill .icon { font-size: 9px; }
+
+  /* SIDE NAV */
+  .sidenav {
+    position: fixed;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    z-index: 40;
+  }
+  .sidenav-item {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 0;
+  }
+  .sidenav-item::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--text-dim);
+    transition: all 0.3s;
+  }
+  .sidenav-item:hover { color: var(--text-muted); transform: translateX(4px); }
+  .sidenav-item.active { color: var(--text); }
+  .sidenav-item.active::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 12px var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+    padding: 100px 40px 40px;
+  }
+
+  /* THE GLOWING ELEMENT (replaces Hubtown's cube — a soft glowing orb instead) */
+  .orb-container {
+    position: relative;
+    width: 360px;
+    height: 360px;
+    margin-bottom: 60px;
+    animation: float 8s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+  }
+  .orb {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 30%,
+        rgba(150, 245, 200, 0.9) 0%,
+        rgba(52, 211, 153, 0.7) 20%,
+        rgba(16, 185, 129, 0.5) 45%,
+        rgba(10, 60, 40, 0.3) 70%,
+        transparent 100%);
+    filter: blur(2px);
+    box-shadow:
+      0 0 80px rgba(52,211,153,0.4),
+      0 0 160px rgba(52,211,153,0.25),
+      0 0 240px rgba(16,185,129,0.15);
+  }
+  .orb::before {
+    content: '';
+    position: absolute;
+    inset: 20%;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 25%,
+        rgba(220, 255, 240, 0.6) 0%,
+        rgba(110, 231, 183, 0.3) 30%,
+        transparent 60%);
+    filter: blur(8px);
+  }
+  /* Halo ring */
+  .orb-container::after {
+    content: '';
+    position: absolute;
+    inset: -40px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle, transparent 50%, rgba(52,211,153,0.08) 65%, transparent 75%);
+    animation: ringPulse 6s ease-in-out infinite;
+  }
+  @keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.08); opacity: 1; }
+  }
+
+  /* Particle dust around the orb */
+  .particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--accent-soft);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--accent);
+    opacity: 0.5;
+    animation: drift 12s linear infinite;
+  }
+  .particle:nth-child(1) { left: 20%; top: 30%; animation-delay: 0s; }
+  .particle:nth-child(2) { left: 75%; top: 60%; animation-delay: 2s; }
+  .particle:nth-child(3) { left: 35%; top: 70%; animation-delay: 4s; }
+  .particle:nth-child(4) { left: 85%; top: 25%; animation-delay: 6s; }
+  .particle:nth-child(5) { left: 15%; top: 55%; animation-delay: 8s; }
+  .particle:nth-child(6) { left: 65%; top: 40%; animation-delay: 10s; }
+  @keyframes drift {
+    0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+    20% { opacity: 0.7; }
+    80% { opacity: 0.7; }
+    100% { transform: translate(40px, -60px) scale(1.2); opacity: 0; }
+  }
+
+  /* HORIZON LINE — subtle water effect at the bottom */
+  .horizon {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 0;
+    height: 40vh;
+    background:
+      linear-gradient(to bottom,
+        transparent 0%,
+        rgba(52,211,153,0.04) 60%,
+        rgba(52,211,153,0.10) 100%);
+    pointer-events: none;
+  }
+  .horizon::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 50%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(52,211,153,0.4), transparent);
+    box-shadow: 0 0 12px rgba(52,211,153,0.6);
+  }
+
+  /* HEADLINE */
+  .headline {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(40px, 4.5vw, 64px);
+    font-weight: 300;
+    letter-spacing: 2px;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 22px;
+    text-transform: uppercase;
+  }
+  .headline .strong { font-weight: 600; }
+  .headline .accent { color: var(--accent-soft); font-style: italic; font-weight: 400; }
+
+  .tagline {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+    max-width: 420px;
+    line-height: 1.7;
+    margin-bottom: 50px;
+    font-weight: 400;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 16px 28px;
+    background: rgba(52,211,153,0.08);
+    border: 1px solid rgba(52,211,153,0.3);
+    border-radius: 100px;
+    color: var(--text);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+    font-weight: 500;
+  }
+  .cta:hover {
+    background: rgba(52,211,153,0.18);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 0 24px rgba(52,211,153,0.25);
+  }
+  .cta::before { content: '◇'; color: var(--accent); }
+
+  /* BOTTOM BAR — small functional elements like Hubtown */
+  .bottombar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .bottombar > * { pointer-events: auto; }
+  .meta {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+
+  /* Responsive — collapse sidenav on small */
+  @media (max-width: 900px) {
+    .sidenav { display: none; }
+    .topbar { padding: 20px 24px; }
+    .bottombar { padding: 20px 24px; }
+    .orb-container { width: 240px; height: 240px; margin-bottom: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<nav class="topbar">
+  <div class="logo">BRUS<span class="dot">·</span>LAI</div>
+  <div class="topbar-actions">
+    <button class="pill"><span class="icon">◇</span> Projects</button>
+    <button class="pill"><span class="icon">◯</span> Menu</button>
+  </div>
+</nav>
+
+<!-- SIDE NAV -->
+<nav class="sidenav">
+  <div class="sidenav-item">Studio</div>
+  <div class="sidenav-item active">Craft</div>
+  <div class="sidenav-item">Ventures</div>
+  <div class="sidenav-item">Notes</div>
+  <div class="sidenav-item">Contact</div>
+</nav>
+
+<!-- HERO -->
+<main class="hero">
+  <div class="orb-container">
+    <div class="orb"></div>
+    <div class="particles">
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+      <span class="particle"></span>
+    </div>
+  </div>
+
+  <h1 class="headline">
+    Small things,<br>
+    <span class="strong">made with</span> <span class="accent">care</span>
+  </h1>
+  <p class="tagline">
+    A solo software studio in Norway. We build daily puzzles and thoughtful tools — slowly, deliberately, for people who don't want to be sold to.
+  </p>
+  <button class="cta">Explore the work</button>
+
+  <div class="horizon"></div>
+</main>
+
+<!-- BOTTOM BAR -->
+<div class="bottombar">
+  <div class="meta"><span class="dot"></span> Bergen · Norway</div>
+  <div class="meta">2026 / Brus Lai AS</div>
+</div>
+
+</body>
+</html>

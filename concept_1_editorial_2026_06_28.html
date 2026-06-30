@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai AS — Editorial concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1e9;
+    --bg-deep: #ede5d4;
+    --ink: #1a1612;
+    --ink-soft: #5a4f3f;
+    --muted: #8a7f6b;
+    --line: #d4c8b0;
+    --accent: #7d2828;
+    --accent-soft: #a83d3d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 48px; }
+  a { color: inherit; }
+
+  /* NAV */
+  nav.top {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  nav.top .row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    max-width: 1240px; margin: 0 auto; padding: 0 48px;
+  }
+  nav.top .brand {
+    font-weight: 600; font-size: 1.1rem; letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+  nav.top .meta {
+    font-family: 'Inter', sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.2em; color: var(--muted);
+  }
+  nav.top ul {
+    list-style: none; display: flex; gap: 28px;
+  }
+  nav.top ul a {
+    font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 500;
+    text-decoration: none; color: var(--ink-soft);
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  nav.top ul a:hover { color: var(--accent); }
+
+  /* MASTHEAD HERO */
+  .masthead {
+    padding: 90px 0 120px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .masthead .issue-line {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 60px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .masthead .issue-line span { color: var(--ink-soft); }
+  .masthead h1 {
+    font-weight: 300;
+    font-size: clamp(56px, 9vw, 148px);
+    line-height: 0.94;
+    letter-spacing: -0.04em;
+    max-width: 1100px;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .masthead .lede {
+    margin-top: 56px;
+    max-width: 620px;
+    font-size: 1.32rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+  .masthead .lede::first-letter {
+    font-family: 'Source Serif 4', serif;
+    float: left;
+    font-size: 4.2rem;
+    line-height: 0.85;
+    padding: 8px 12px 0 0;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  /* SECTIONS */
+  section { padding: 110px 0; border-bottom: 1px solid var(--line); }
+  .section-meta {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 36px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-meta::before {
+    content: '';
+    width: 36px;
+    height: 1px;
+    background: var(--accent);
+  }
+  h2 {
+    font-weight: 400;
+    font-size: clamp(36px, 4.5vw, 60px);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    margin-bottom: 40px;
+    max-width: 800px;
+  }
+  h2 em { font-style: italic; color: var(--accent); }
+
+  /* ABOUT — multi-column body */
+  .about-body {
+    columns: 2; column-gap: 56px;
+    max-width: 1000px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .about-body p + p { margin-top: 18px; break-inside: avoid; }
+
+  /* PORTFOLIO — magazine articles */
+  .articles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 56px;
+    margin-top: 8px;
+  }
+  .article {
+    border-top: 2px solid var(--ink);
+    padding-top: 18px;
+  }
+  .article .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .article h3 {
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .article p {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  /* FOCUS — numbered list */
+  .focus-list {
+    margin-top: 8px;
+    max-width: 880px;
+  }
+  .focus-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 2fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .focus-row:last-child { border-bottom: 1px solid var(--line); }
+  .focus-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .focus-h {
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .focus-p {
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+
+  /* APPROACH — three principles in serif */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-top: 8px;
+  }
+  .principle {
+    padding: 36px 28px;
+    background: var(--bg-deep);
+    border-radius: 2px;
+  }
+  .principle .num {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 28px;
+  }
+  .principle h4 {
+    font-weight: 500;
+    font-size: 1.5rem;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  .principle p {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  /* INTERLUDE QUOTE */
+  .pull-quote {
+    padding: 100px 0;
+    background: var(--ink);
+    color: var(--bg);
+    text-align: center;
+  }
+  .pull-quote .container { max-width: 900px; }
+  .pull-quote blockquote {
+    font-size: clamp(28px, 3.2vw, 44px);
+    line-height: 1.2;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 32px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(246, 241, 233, 0.55);
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 8px;
+    align-items: end;
+  }
+  .contact-grid h3 {
+    font-weight: 400;
+    font-size: 2.2rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .contact-grid .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .contact-grid .email-cta {
+    display: inline-block;
+    padding: 18px 32px;
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .contact-grid .email-cta:hover { background: var(--accent); }
+  .contact-grid .addr {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 60px 0 50px;
+    background: var(--bg-deep);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  footer .row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 40px; flex-wrap: wrap;
+  }
+  footer strong { color: var(--ink); font-weight: 600; }
+  footer ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  footer ul a { color: var(--muted); text-decoration: none; }
+  footer ul a:hover { color: var(--ink); }
+
+  @media (max-width: 800px) {
+    .container, nav.top .row { padding: 0 24px; }
+    nav.top ul { display: none; }
+    .articles, .principles, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+    .about-body { columns: 1; }
+    .focus-row { grid-template-columns: 1fr; gap: 8px; }
+    .masthead { padding: 60px 0 80px; }
+    section { padding: 70px 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="row">
+    <a class="brand" href="#top">Brus Lai AS</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#focus">Focus</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="meta">Strusshamn · NO</div>
+  </div>
+</nav>
+
+<header class="masthead" id="top">
+  <div class="container">
+    <div class="issue-line">
+      <span>Vol. I — Established 2024</span>
+      <span>·</span>
+      <span>Norwegian holding company</span>
+    </div>
+    <h1><em>Concentrated.</em><br>Long-held.</h1>
+    <p class="lede">Brus Lai AS commits patient capital to technology and AI, and owns a small set of software ventures alongside.</p>
+  </div>
+</header>
+
+<section id="about">
+  <div class="container">
+    <div class="section-meta">About</div>
+    <h2>Long-term capital.<br><em>Operator mindset.</em></h2>
+    <div class="about-body">
+      <p>Brus Lai AS is a privately held Norwegian holding company. Our work is concentrated capital deployment — long-term positions in technology and the AI ecosystem, alongside a small set of owned software ventures.</p>
+      <p>We're not a fund. We don't operate on exit timelines. Operating our own ventures keeps the investment thinking grounded in real product reality, not slide decks.</p>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="container">
+    <div class="section-meta">Portfolio</div>
+    <h2>Where our work lives.</h2>
+    <div class="articles">
+      <article class="article">
+        <div class="label">Capital</div>
+        <h3>Long-term positions</h3>
+        <p>Concentrated, multi-year positions in major technology platforms and the AI ecosystem.</p>
+      </article>
+      <article class="article">
+        <div class="label">Software</div>
+        <h3>Mobile games</h3>
+        <p>Daily puzzles for iOS and Android. Long sessions per user, low marketing overhead, products people return to without prompting.</p>
+      </article>
+      <article class="article">
+        <div class="label">In development</div>
+        <h3>Accounting software</h3>
+        <p>Modern bookkeeping that just works. Built for small businesses and accountants who value their time.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<aside class="pull-quote">
+  <div class="container">
+    <blockquote>
+      "We're not a fund. We don't operate on exit timelines."
+    </blockquote>
+    <cite>Operated from Western Norway · Strusshamn · 60.4° N</cite>
+  </div>
+</aside>
+
+<section id="focus">
+  <div class="container">
+    <div class="section-meta">Focus</div>
+    <h2>Where we look.</h2>
+    <div class="focus-list">
+      <div class="focus-row">
+        <div class="focus-num">01</div>
+        <div class="focus-h">AI infrastructure and applications.</div>
+        <div class="focus-p">Concentrated positions in the companies architecting the next decade of compute, models, and applied AI — held with multi-year conviction.</div>
+      </div>
+      <div class="focus-row">
+        <div class="focus-num">02</div>
+        <div class="focus-h">US technology platforms.</div>
+        <div class="focus-p">Durable franchises with structural advantages: distribution, data, switching costs. We tend to own the architects, not the visitors.</div>
+      </div>
+      <div class="focus-row">
+        <div class="focus-num">03</div>
+        <div class="focus-h">Emerging markets, selectively.</div>
+        <div class="focus-p">Quiet exposure to under-covered geographies where governance and growth align.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="approach">
+  <div class="container">
+    <div class="section-meta">Approach</div>
+    <h2>How we work.</h2>
+    <div class="principles">
+      <div class="principle">
+        <div class="num">PRINCIPLE 01</div>
+        <h4>Decade-plus horizon</h4>
+        <p>Software takes years to compound. We don't shortcut that.</p>
+      </div>
+      <div class="principle">
+        <div class="num">PRINCIPLE 02</div>
+        <h4>Operator-led</h4>
+        <p>We build the products we back, which keeps our investment thinking grounded in real product reality.</p>
+      </div>
+      <div class="principle">
+        <div class="num">PRINCIPLE 03</div>
+        <h4>Boring is good</h4>
+        <p>We optimise for products that work reliably and businesses that don't blow up. Growth comes from that, not from hype.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="section-meta">Contact</div>
+    <h2>Enquiries.</h2>
+    <div class="contact-grid">
+      <div>
+        <div class="label">General</div>
+        <a class="email-cta" href="mailto:contact@bruslai.no">Send us an email →</a>
+      </div>
+      <div>
+        <div class="label">Registered office</div>
+        <div class="addr">Eidsvikvegen 26<br>5302 Strusshamn<br>Norway</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div>
+        <strong>Brus Lai AS</strong> · Norwegian limited company (Aksjeselskap) · Org. nr. 922 712 476<br>
+        Eidsvikvegen 26, 5302 Strusshamn, Norway<br>
+        © 2026 Brus Lai AS. All rights reserved.
+      </div>
+      <ul>
+        <li><a href="privacy.html">Privacy policy</a></li>
+        <li><a href="terms.html">Terms of service</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

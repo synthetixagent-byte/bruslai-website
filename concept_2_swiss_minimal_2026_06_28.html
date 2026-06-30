@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai AS — Swiss Minimal concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf9;
+    --ink: #0a0a0a;
+    --ink-soft: #525252;
+    --muted: #a3a3a3;
+    --line: #e5e5e5;
+    --line-strong: #0a0a0a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.011em;
+  }
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(10,10,10,0.025) 1px, transparent 1px);
+    background-size: calc(100% / 12) 100%;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 64px; }
+  a { color: inherit; }
+
+  /* NAV — tiny, monospace metadata feel */
+  nav.top {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  nav.top .row {
+    max-width: 1320px; margin: 0 auto; padding: 0 64px;
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+  }
+  nav.top .brand {
+    font-weight: 500; text-decoration: none; color: var(--ink);
+  }
+  nav.top ul {
+    list-style: none; display: flex; gap: 28px; justify-content: center;
+  }
+  nav.top ul a {
+    color: var(--ink-soft); text-decoration: none; font-weight: 400;
+  }
+  nav.top ul a:hover { color: var(--ink); }
+  nav.top .meta { text-align: right; color: var(--muted); }
+
+  /* HERO — minimal, confident */
+  .hero {
+    padding: 220px 0 180px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hero .index-tag {
+    position: absolute;
+    top: 60px; right: 64px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  .hero .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    margin-bottom: 80px;
+    letter-spacing: 0.02em;
+  }
+  .hero h1 {
+    font-weight: 400;
+    font-size: clamp(36px, 4.8vw, 80px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 900px;
+    margin-bottom: 60px;
+  }
+  .hero h1 .em {
+    font-weight: 300;
+    color: var(--ink-soft);
+  }
+  .hero .lede {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 480px;
+    line-height: 1.55;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 140px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-header {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+    margin-bottom: 80px;
+    align-items: baseline;
+  }
+  .section-header .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+  .section-header h2 {
+    font-weight: 400;
+    font-size: clamp(28px, 3vw, 44px);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    max-width: 760px;
+  }
+
+  /* ABOUT */
+  .about-text {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 64px;
+  }
+  .about-text .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .about-text .body { max-width: 640px; }
+  .about-text .body p {
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1.65;
+    max-width: 580px;
+  }
+  .about-text .body p + p { margin-top: 24px; }
+
+  /* PORTFOLIO TABLE */
+  .ventures-table {
+    border-top: 1px solid var(--line-strong);
+  }
+  .venture-row {
+    display: grid;
+    grid-template-columns: 200px 240px 1fr 80px;
+    gap: 32px;
+    padding: 38px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .venture-row .v-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .venture-row .v-title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .venture-row .v-desc {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+  .venture-row .v-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  /* FOCUS — three columns with vertical separators */
+  .focus-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-left: 1px solid var(--line);
+  }
+  .focus-col {
+    padding: 0 40px;
+    border-right: 1px solid var(--line);
+  }
+  .focus-col .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 32px;
+    letter-spacing: 0.04em;
+  }
+  .focus-col h4 {
+    font-size: 1.18rem;
+    font-weight: 500;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    letter-spacing: -0.015em;
+  }
+  .focus-col p {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* APPROACH — large numbered grid */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line-strong);
+  }
+  .principle {
+    padding: 40px 32px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .principle:nth-child(3n) { border-right: none; }
+  .principle .pnum {
+    font-size: 5rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 60px;
+    color: var(--ink);
+  }
+  .principle h4 {
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .principle p {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  /* CONTACT */
+  .contact-block {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .contact-block .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .contact-block .col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .contact-block .col .value {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  .contact-block a {
+    display: inline-block;
+    padding: 14px 22px;
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .contact-block a:hover { background: #262626; }
+
+  /* FOOTER */
+  footer {
+    padding: 48px 0;
+    border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  footer .row {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 40px;
+  }
+  footer ul { list-style: none; display: flex; gap: 24px; }
+  footer ul a { color: var(--muted); text-decoration: none; }
+  footer ul a:hover { color: var(--ink); }
+
+  @media (max-width: 800px) {
+    .container, nav.top .row { padding: 0 24px; }
+    nav.top .row { grid-template-columns: 1fr auto; }
+    nav.top ul { display: none; }
+    .hero { padding: 120px 0 100px; }
+    .hero .index-tag { display: none; }
+    .section-header, .about-text, .contact-block, .venture-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .focus-cols, .principles { grid-template-columns: 1fr; border-left: 0; }
+    .focus-col, .principle { border-right: 0; padding: 32px 0; }
+    section { padding: 70px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<nav class="top">
+  <div class="row">
+    <a class="brand" href="#top">Brus Lai AS</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#focus">Focus</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="meta">60.4°N / 5.4°E</div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container">
+    <div class="index-tag">[ INDEX — 001 ]</div>
+    <div class="eyebrow">→ Norwegian holding company / Est. 2024</div>
+    <h1>Patient capital.<br><span class="em">Long-horizon thinking.</span></h1>
+    <p class="lede">Brus Lai AS commits patient capital to technology and AI, and owns a small set of software ventures alongside.</p>
+  </div>
+</header>
+
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">01 / ABOUT</div>
+      <h2>Long-term capital. Operator mindset.</h2>
+    </div>
+    <div class="about-text">
+      <div class="label">Notes</div>
+      <div class="body">
+        <p>Brus Lai AS is a privately held Norwegian holding company. Our work is concentrated capital deployment — long-term positions in technology and the AI ecosystem, alongside a small set of owned software ventures.</p>
+        <p>We're not a fund. We don't operate on exit timelines. Operating our own ventures keeps the investment thinking grounded in real product reality, not slide decks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">02 / PORTFOLIO</div>
+      <h2>Where our work lives.</h2>
+    </div>
+    <div class="ventures-table">
+      <div class="venture-row">
+        <div class="v-num">001 / CAPITAL</div>
+        <div class="v-title">Long-term positions</div>
+        <div class="v-desc">Concentrated, multi-year positions in major technology platforms and the AI ecosystem.</div>
+        <div class="v-status">ACTIVE</div>
+      </div>
+      <div class="venture-row">
+        <div class="v-num">002 / SOFTWARE</div>
+        <div class="v-title">Mobile games</div>
+        <div class="v-desc">Daily puzzles for iOS and Android. Long sessions per user, low marketing overhead, products people return to without prompting.</div>
+        <div class="v-status">ACTIVE</div>
+      </div>
+      <div class="venture-row">
+        <div class="v-num">003 / SOFTWARE</div>
+        <div class="v-title">Accounting software</div>
+        <div class="v-desc">Modern bookkeeping that just works. Built for small businesses and accountants who value their time.</div>
+        <div class="v-status">IN DEV</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="focus">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">03 / FOCUS</div>
+      <h2>Where we look.</h2>
+    </div>
+    <div class="focus-cols">
+      <div class="focus-col">
+        <div class="num">— 01</div>
+        <h4>AI infrastructure and applications.</h4>
+        <p>Concentrated positions in the companies architecting the next decade of compute, models, and applied AI — held with multi-year conviction.</p>
+      </div>
+      <div class="focus-col">
+        <div class="num">— 02</div>
+        <h4>US technology platforms.</h4>
+        <p>Durable franchises with structural advantages: distribution, data, switching costs. We tend to own the architects, not the visitors.</p>
+      </div>
+      <div class="focus-col">
+        <div class="num">— 03</div>
+        <h4>Emerging markets, selectively.</h4>
+        <p>Quiet exposure to under-covered geographies where governance and growth align.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="approach">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">04 / APPROACH</div>
+      <h2>How we work.</h2>
+    </div>
+    <div class="principles">
+      <div class="principle">
+        <div class="pnum">01</div>
+        <h4>Decade-plus horizon</h4>
+        <p>Software takes years to compound. We don't shortcut that.</p>
+      </div>
+      <div class="principle">
+        <div class="pnum">02</div>
+        <h4>Operator-led</h4>
+        <p>We build the products we back, which keeps our investment thinking grounded in real product reality.</p>
+      </div>
+      <div class="principle">
+        <div class="pnum">03</div>
+        <h4>Boring is good</h4>
+        <p>We optimise for products that work reliably and businesses that don't blow up. Growth comes from that, not from hype.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <div class="num">05 / CONTACT</div>
+      <h2>Enquiries.</h2>
+    </div>
+    <div class="contact-block">
+      <div class="label">Channels</div>
+      <div class="col">
+        <h4>General</h4>
+        <div class="value">
+          <a href="mailto:contact@bruslai.no">contact@bruslai.no →</a>
+        </div>
+      </div>
+      <div class="col">
+        <h4>Registered office</h4>
+        <div class="value">Eidsvikvegen 26<br>5302 Strusshamn<br>Norway</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div>BRUS LAI AS / AKSJESELSKAP / ORG.NR. 922 712 476 / © 2026 ALL RIGHTS RESERVED</div>
+      <ul>
+        <li><a href="privacy.html">PRIVACY</a></li>
+        <li><a href="terms.html">TERMS</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

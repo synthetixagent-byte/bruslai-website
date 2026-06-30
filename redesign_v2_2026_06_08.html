@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai AS — A Norwegian holding company</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ebe2cc;
+    --bg-warm: #f0e8d4;
+    --bg-deep: #e2d6b8;
+    --ink: #2a2418;
+    --ink-soft: #5a4f3a;
+    --muted: #7a6f55;
+    --line: #d8cdb0;
+    --green: #1d3832;
+    --green-deep: #122621;
+    --green-light: #2c4636;
+    --accent: #5a8770;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Subtle paper grain — 2026 editorial print feel */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: multiply;
+  }
+
+  /* ── NAV ── */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 26px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: padding 0.4s, background 0.4s, border-color 0.4s;
+    border-bottom: 1px solid transparent;
+  }
+  nav.top.scrolled {
+    padding: 16px 48px;
+    background: rgba(235, 226, 204, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav.top .brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    color: var(--ink);
+  }
+  nav.top ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+  nav.top ul a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav.top ul a:hover { color: var(--ink); }
+
+  /* ── HERO ── editorial, no photo, just big type */
+  .hero {
+    min-height: 100vh;
+    padding: 180px 48px 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 38px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero .eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--ink-soft);
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(48px, 7vw, 108px);
+    line-height: 1.0;
+    letter-spacing: -2px;
+    color: var(--ink);
+    max-width: 14ch;
+    margin-bottom: 50px;
+  }
+  .hero h1 .em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--green);
+  }
+  .hero .sub {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--ink-soft);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+  .hero .meta {
+    margin-top: 80px;
+    display: flex;
+    gap: 70px;
+    flex-wrap: wrap;
+  }
+  .meta-item .label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .meta-item .value {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  /* ── SECTION SCAFFOLD ── */
+  section {
+    padding: 140px 48px;
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+  }
+  section .num {
+    font-family: 'Fraunces', serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 60px;
+    letter-spacing: 1px;
+  }
+  section .title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(32px, 4.5vw, 56px);
+    line-height: 1.15;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 80px;
+    max-width: 18ch;
+  }
+  section .title .em { font-style: italic; color: var(--green); }
+
+  /* ── SECTION 1 — POSITION ── one elegant statement */
+  .position {
+    background: var(--bg-warm);
+    margin: 0;
+    max-width: none;
+    padding: 160px 48px;
+  }
+  .position .inner {
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .position .statement {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(28px, 3.5vw, 44px);
+    line-height: 1.35;
+    color: var(--ink);
+    max-width: 22ch;
+    letter-spacing: -0.5px;
+  }
+  .position .statement .accent {
+    color: var(--green);
+    font-style: italic;
+  }
+  .position .statement .underline {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 8px;
+  }
+
+  /* ── SECTION 2 — WHERE WE INVEST ── grid of categories */
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 80px 100px;
+  }
+  @media (max-width: 800px) { .focus-grid { grid-template-columns: 1fr; gap: 50px; } }
+  .focus-item {
+    border-top: 1px solid var(--line);
+    padding-top: 36px;
+  }
+  .focus-item .cat {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .focus-item .focus-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.85rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .focus-item .focus-desc {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+
+  /* ── SECTION 3 — EXPOSURE ── tasteful named cards */
+  .exposure {
+    background: var(--green);
+    color: var(--bg);
+    max-width: none;
+    margin: 0;
+    padding: 160px 48px;
+  }
+  .exposure .inner { max-width: 1300px; margin: 0 auto; }
+  .exposure .num, .exposure .title { color: rgba(235,226,204,0.9); }
+  .exposure .title .em { color: rgba(150,200,170,0.95); }
+  .exposure-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(235,226,204,0.18);
+    margin-top: 40px;
+  }
+  @media (max-width: 800px) { .exposure-list { grid-template-columns: 1fr; } }
+  .exposure-card {
+    background: var(--green);
+    padding: 40px 32px;
+    transition: background 0.4s;
+  }
+  .exposure-card:hover { background: var(--green-light); }
+  .exposure-card .name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: var(--bg);
+  }
+  .exposure-card .meta {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(235,226,204,0.6);
+    margin-bottom: 24px;
+  }
+  .exposure-card .desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: rgba(235,226,204,0.8);
+  }
+
+  /* ── SECTION 4 — PHILOSOPHY ── manifesto-style text */
+  .philosophy { padding: 200px 48px 180px; }
+  .philosophy-text {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(22px, 2.6vw, 32px);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 22ch;
+    letter-spacing: -0.5px;
+  }
+  .philosophy-text p { margin-bottom: 1.2em; }
+  .philosophy-text .em { font-style: italic; color: var(--green); }
+
+  /* ── FOOTER ── minimal */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 60px 48px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    max-width: 1300px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  footer .left .brand-mark {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  footer .left .org {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  footer .right {
+    text-align: right;
+  }
+  footer .right a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.82rem;
+    display: block;
+    margin-bottom: 6px;
+    transition: color 0.2s;
+  }
+  footer .right a:hover { color: var(--green); }
+
+  /* ── SCROLL-TRIGGERED REVEALS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.25s; }
+  .reveal-delay-3 { transition-delay: 0.4s; }
+  .reveal-delay-4 { transition-delay: 0.55s; }
+
+  /* Subtle horizon line that the hero overlays at the top */
+  .horizon-mark {
+    position: fixed;
+    left: 48px;
+    bottom: 24px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
+  }
+  .horizon-mark::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top" id="topnav">
+  <div class="brand">Brus<span style="color:var(--green);">·</span>Lai</div>
+  <ul>
+    <li><a href="#position">Position</a></li>
+    <li><a href="#focus">Focus</a></li>
+    <li><a href="#exposure">Exposure</a></li>
+    <li><a href="#philosophy">Approach</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="eyebrow reveal">A Norwegian holding company</div>
+  <h1 class="reveal reveal-delay-1">
+    Patient capital,<br>
+    <span class="em">deliberate exposure.</span>
+  </h1>
+  <p class="sub reveal reveal-delay-2">
+    Brus Lai AS holds long-term positions in technology — across software, games, mobile platforms, and cloud + AI infrastructure. We move slowly, hold convictions, and concentrate where we see decades-long compounding.
+  </p>
+  <div class="meta reveal reveal-delay-3">
+    <div class="meta-item">
+      <span class="label">Established</span>
+      <span class="value">2024</span>
+    </div>
+    <div class="meta-item">
+      <span class="label">Domiciled</span>
+      <span class="value">Bergen, Norway</span>
+    </div>
+    <div class="meta-item">
+      <span class="label">Mandate</span>
+      <span class="value">Patient · concentrated</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── 1 · POSITION ── -->
+<div class="position" id="position">
+  <div class="inner">
+    <div class="num reveal">— 01 / Position</div>
+    <p class="statement reveal reveal-delay-1">
+      We invest in companies that <span class="accent">define the infrastructure</span> of the next decade — quietly, with conviction, and with <span class="underline">long-term horizons</span>.
+    </p>
+  </div>
+</div>
+
+<!-- ── 2 · FOCUS ── -->
+<section id="focus">
+  <div class="num reveal">— 02 / Focus</div>
+  <h2 class="title reveal reveal-delay-1">Where our <span class="em">capital lives.</span></h2>
+  <div class="focus-grid">
+    <div class="focus-item reveal reveal-delay-1">
+      <div class="cat">Software</div>
+      <h3 class="focus-title">Infrastructure for developers and operators</h3>
+      <p class="focus-desc">Quiet, durable software businesses solving real coordination problems. Long product cycles, defensible distribution, modest hype.</p>
+    </div>
+    <div class="focus-item reveal reveal-delay-2">
+      <div class="cat">Games · Mobile</div>
+      <h3 class="focus-title">Daily attention, slow craft</h3>
+      <p class="focus-desc">Mobile games and consumer apps built for retention without dark patterns. We hold equity in some, operate one ourselves.</p>
+    </div>
+    <div class="focus-item reveal reveal-delay-3">
+      <div class="cat">Cloud · AI</div>
+      <h3 class="focus-title">The platforms underneath modern intelligence</h3>
+      <p class="focus-desc">Compute, foundation models, and the supporting layers that make AI commercially useful. The infrastructure others build on top of.</p>
+    </div>
+    <div class="focus-item reveal reveal-delay-4">
+      <div class="cat">Owned ventures</div>
+      <h3 class="focus-title">A small set of products we build ourselves</h3>
+      <p class="focus-desc">Brus Lai operates a small studio building consumer software, including Vexsort — a daily color puzzle for a global audience.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 3 · EXPOSURE ── -->
+<div class="exposure" id="exposure">
+  <div class="inner">
+    <div class="num reveal">— 03 / Exposure</div>
+    <h2 class="title reveal reveal-delay-1">Companies that <span class="em">shape the decade.</span></h2>
+    <p style="font-size:1.05rem;color:rgba(235,226,204,0.75);max-width:600px;margin-bottom:60px;line-height:1.7;" class="reveal reveal-delay-2">
+      A non-exhaustive list of public and private positions held within the portfolio. We concentrate where we believe the structural advantages are durable and the incentives are aligned for the long term.
+    </p>
+    <div class="exposure-list reveal reveal-delay-3">
+      <div class="exposure-card">
+        <div class="name">Alphabet</div>
+        <div class="meta">Public · NASDAQ</div>
+        <div class="desc">Long-term position. Distribution and infrastructure layer of the internet, increasingly the AI substrate as well.</div>
+      </div>
+      <div class="exposure-card">
+        <div class="name">Anthropic</div>
+        <div class="meta">Private · AI infrastructure</div>
+        <div class="desc">Exposure through frontier AI research and applied API platform. Patience-capital framing for foundation-model economics.</div>
+      </div>
+      <div class="exposure-card">
+        <div class="name">Vexsort</div>
+        <div class="meta">Owned · Software</div>
+        <div class="desc">Internally operated. A daily mobile puzzle for global audiences. Live on App Store and Google Play.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 4 · PHILOSOPHY ── -->
+<section class="philosophy" id="philosophy">
+  <div class="num reveal">— 04 / Approach</div>
+  <h2 class="title reveal reveal-delay-1">Slow money. <span class="em">Concentrated conviction.</span></h2>
+  <div class="philosophy-text reveal reveal-delay-2">
+    <p>We don't chase narratives. We don't index.</p>
+    <p>We take positions in companies whose advantages compound on <span class="em">decade-scale</span>, and we hold them through cycles.</p>
+    <p>The portfolio is small by design. The horizon is long by conviction.</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="contact">
+  <div class="left">
+    <div class="brand-mark">Brus<span style="color:var(--green);">·</span>Lai AS</div>
+    <div class="org">
+      Org. 922 712 476<br>
+      Eidsvikvegen 26, 5302 Strusshamn, Norway
+    </div>
+  </div>
+  <div class="right">
+    <a href="mailto:contact@bruslai.no">contact@bruslai.no</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+
+<!-- Sticky horizon mark (top right small "you are here" indicator) -->
+<div class="horizon-mark">Bergen 60° 23′ N</div>
+
+<script>
+  // Nav scroll polish
+  const nav = document.getElementById('topnav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Scroll-triggered reveals via IntersectionObserver
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(
+    entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: '0px 0px -80px 0px' }
+  );
+  reveals.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

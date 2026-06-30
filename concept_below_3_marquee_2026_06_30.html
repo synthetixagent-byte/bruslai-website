@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai — Concept 3: Marquee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600&family=Archivo:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#101822; --bg2:#161f2a;
+  --accent:#c8dcee; --accent2:#f8e0c8;
+  --text:#f5f7fb; --muted:#c0c9d8; --faint:#8a94a4;
+  --border:rgba(245,247,251,.12);
+}
+body{background:var(--bg);color:var(--text);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.concept-label{position:fixed;top:20px;left:20px;z-index:100;padding:8px 14px;background:rgba(245,247,251,.06);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:100px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--accent)}
+
+.interlude{position:relative;height:60vh;min-height:380px;background-image:linear-gradient(rgba(16,24,34,.35),rgba(16,24,34,.55)),url('interlude.jpg');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.interlude-caption{text-align:center;color:var(--text);font-family:'Unbounded',sans-serif;font-style:italic;font-weight:300;font-size:clamp(22px,2.8vw,40px);max-width:760px;padding:0 24px;text-shadow:0 2px 14px rgba(0,0,0,.5);letter-spacing:-.01em}
+.interlude-caption small{display:block;margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--accent2);font-style:normal;font-weight:400;text-shadow:none}
+
+/* MARQUEE TICKER */
+.marquee-wrap{padding:6vh 0;overflow:hidden;border-bottom:1px solid var(--border)}
+.marquee-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--accent);text-align:center;margin-bottom:32px}
+.marquee{display:flex;width:max-content;animation:slide 50s linear infinite;will-change:transform}
+.marquee:hover{animation-play-state:paused}
+.m-item{font-family:'Unbounded',sans-serif;font-weight:300;font-size:clamp(36px,5vw,80px);letter-spacing:-.025em;padding:0 2vw;display:flex;align-items:baseline;gap:18px;white-space:nowrap;color:var(--text)}
+.m-item .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--accent);font-weight:500}
+.m-item .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);align-self:center;margin:0 1vw}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* MANIFEST */
+.manifesto{padding:14vh 32px;text-align:center;max-width:1000px;margin:0 auto}
+.manifesto-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--accent);margin-bottom:36px;text-transform:uppercase}
+.manifesto h2{font-family:'Unbounded',sans-serif;font-weight:400;font-size:clamp(36px,5.5vw,84px);line-height:1.05;letter-spacing:-.03em;margin-bottom:44px}
+.manifesto h2 .grad{font-weight:300;background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.manifesto p{font-size:19px;line-height:1.65;color:var(--muted);font-weight:300;max-width:640px;margin:0 auto}
+
+.contact-mini{text-align:center;padding:10vh 24px 8vh;border-top:1px solid var(--border)}
+.contact-mini h3{font-family:'Unbounded',sans-serif;font-weight:300;font-size:clamp(28px,3.4vw,44px);line-height:1;margin-bottom:32px;letter-spacing:-.025em}
+.contact-mini .mail{display:inline-block;padding:16px 32px;background:linear-gradient(100deg,var(--accent),var(--accent2));color:var(--bg);border-radius:100px;text-decoration:none;font-size:16px;font-weight:500}
+.contact-mini .addr{margin-top:36px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint);letter-spacing:.04em}
+
+footer{padding:32px 40px;border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);text-align:center;letter-spacing:.05em;line-height:1.8}
+</style>
+</head>
+<body>
+
+<div class="concept-label">CONCEPT 03 / MARQUEE</div>
+
+<section class="interlude">
+  <div class="interlude-caption">
+    Operated from Western Norway.
+    <small>STRUSSHAMN &middot; 60.4&deg; N</small>
+  </div>
+</section>
+
+<section class="marquee-wrap">
+  <div class="marquee-label">— What we hold &middot; what we look for</div>
+  <div class="marquee">
+    <div class="m-item"><span class="tag">01</span>Long positions in tech &amp; AI</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <div class="m-item"><span class="tag">02</span>Mobile games</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <div class="m-item"><span class="tag">03</span>Accounting software</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <div class="m-item"><span class="tag">04</span>AI infrastructure</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <div class="m-item"><span class="tag">05</span>US technology platforms</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <div class="m-item"><span class="tag">06</span>Emerging markets</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <!-- duplicate for seamless loop -->
+    <div class="m-item"><span class="tag">01</span>Long positions in tech &amp; AI</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <div class="m-item"><span class="tag">02</span>Mobile games</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <div class="m-item"><span class="tag">03</span>Accounting software</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <div class="m-item"><span class="tag">04</span>AI infrastructure</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <div class="m-item"><span class="tag">05</span>US technology platforms</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+    <div class="m-item"><span class="tag">06</span>Emerging markets</div>
+    <span class="dot" style="background:var(--accent2)"></span>
+  </div>
+</section>
+
+<article class="manifesto">
+  <div class="manifesto-eyebrow">— The thesis</div>
+  <h2>We invest. We build. <span class="grad">We hold.</span></h2>
+  <p>Brus Lai AS is a Norwegian holding company. We commit capital to technology and AI for the long horizon, and we own and operate the software companies and games we back. No exit timelines. No quarterly thinking. Just patience and product reality.</p>
+</article>
+
+<section class="contact-mini">
+  <h3>Let's talk.</h3>
+  <a class="mail" href="#" onclick="this.href='mailto:'+atob('Y29udGFjdEBicnVzbGFpLm5v');return true;">contact@bruslai.no →</a>
+  <div class="addr">Eidsvikvegen 26 &middot; 5302 Strusshamn &middot; Norway</div>
+</section>
+
+<footer>
+  Brus Lai AS &middot; Aksjeselskap &middot; Org. nr. 922 712 476 &middot; &copy; 2026
+</footer>
+
+</body>
+</html>

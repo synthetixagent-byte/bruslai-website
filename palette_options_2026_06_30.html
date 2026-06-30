@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai — Palette Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600&family=Archivo:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #050608;
+    color: #f4f4f5;
+    font-family: 'Archivo', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding: 40px 24px 80px;
+  }
+  h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .intro {
+    font-size: 14px;
+    color: #888;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .palette {
+    border-radius: 20px;
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: center;
+    min-height: 320px;
+  }
+
+  /* atmosphere orbs per palette */
+  .palette::before, .palette::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .palette::before {
+    width: 380px; height: 380px;
+    top: -20%; left: -8%;
+    background: radial-gradient(circle, var(--glowA), transparent 65%);
+  }
+  .palette::after {
+    width: 320px; height: 320px;
+    bottom: -25%; right: -10%;
+    background: radial-gradient(circle, var(--glowB), transparent 65%);
+  }
+
+  .palette .text {
+    position: relative;
+    z-index: 2;
+  }
+  .palette .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .palette h2 {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 600;
+    font-size: clamp(36px, 4.5vw, 64px);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .palette h2 .grad {
+    font-weight: 300;
+    background: linear-gradient(100deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .palette p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 440px;
+    margin-bottom: 26px;
+  }
+  .palette .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    background: linear-gradient(100deg, var(--accent), var(--accent2));
+    color: var(--bg);
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .swatches {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    align-self: end;
+  }
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .swatch .chip {
+    width: 100%;
+    height: 56px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .swatch .name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .palette-meta {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    z-index: 2;
+  }
+
+  /* ========== PALETTES ========== */
+
+  /* 1. Steel Frost (current) */
+  .p1 {
+    --bg: #0a0d12;
+    --text: #eef3f9;
+    --muted: #a3b1c4;
+    --accent: #8fb4d6;
+    --accent2: #dce8f4;
+    --glowA: rgba(143, 180, 214, 0.34);
+    --glowB: rgba(216, 232, 244, 0.26);
+    background: linear-gradient(150deg, #0d1119 0%, #0a0d12 100%);
+  }
+
+  /* 2. Dawn Mist — lighter blue, hint of mauve */
+  .p2 {
+    --bg: #0d1119;
+    --text: #f0f4fa;
+    --muted: #b0bccd;
+    --accent: #a8c4e0;
+    --accent2: #e6efff;
+    --glowA: rgba(168, 196, 224, 0.40);
+    --glowB: rgba(230, 239, 255, 0.30);
+    background: linear-gradient(150deg, #11151f 0%, #0d1119 100%);
+  }
+
+  /* 3. Sky Pearl — lighter sky blue, warm cream accent (sunrise) */
+  .p3 {
+    --bg: #0e1620;
+    --text: #f3f6fa;
+    --muted: #b8c2d2;
+    --accent: #b6d4ec;
+    --accent2: #f0eee8;
+    --glowA: rgba(182, 212, 236, 0.42);
+    --glowB: rgba(240, 238, 232, 0.32);
+    background: linear-gradient(150deg, #131c28 0%, #0e1620 100%);
+  }
+
+  /* 4. Soft Daylight — even lighter blue, peach secondary (golden hour) */
+  .p4 {
+    --bg: #101822;
+    --text: #f5f7fb;
+    --muted: #c0c9d8;
+    --accent: #c8dcee;
+    --accent2: #f8e0c8;
+    --glowA: rgba(200, 220, 238, 0.45);
+    --glowB: rgba(248, 224, 200, 0.35);
+    background: linear-gradient(150deg, #161f2a 0%, #101822 100%);
+  }
+
+  /* 5. Open Sky — lightest blue + golden accent (high noon / horizon) */
+  .p5 {
+    --bg: #12202e;
+    --text: #f7f9fc;
+    --muted: #c8d1de;
+    --accent: #d4e4f2;
+    --accent2: #fae0c0;
+    --glowA: rgba(212, 228, 242, 0.48);
+    --glowB: rgba(250, 224, 192, 0.38);
+    background: linear-gradient(150deg, #182636 0%, #12202e 100%);
+  }
+</style>
+</head>
+<body>
+
+<h1>5 Palette Options for Brus Lai</h1>
+<p class="intro">Blue accent gets progressively lighter. Variants 3-5 mix in warm tones (cream, peach, gold) for sunrise/sky feel.</p>
+
+<div class="grid">
+
+  <div class="palette p1">
+    <div class="palette-meta">01 / CURRENT</div>
+    <div class="text">
+      <div class="label">— Steel Frost</div>
+      <h2>Concentrated. <span class="grad">Long-held.</span></h2>
+      <p>Standard steel blue. What you have now. Medium contrast.</p>
+      <a class="btn">See where our work lives →</a>
+    </div>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#8fb4d6"></div><div class="name">accent</div></div>
+      <div class="swatch"><div class="chip" style="background:#dce8f4"></div><div class="name">accent 2</div></div>
+      <div class="swatch"><div class="chip" style="background:#0a0d12"></div><div class="name">bg</div></div>
+    </div>
+  </div>
+
+  <div class="palette p2">
+    <div class="palette-meta">02</div>
+    <div class="text">
+      <div class="label">— Dawn Mist</div>
+      <h2>Concentrated. <span class="grad">Long-held.</span></h2>
+      <p>Slightly lighter blue. Subtle mauve undertone in the background. Pre-dawn sky.</p>
+      <a class="btn">See where our work lives →</a>
+    </div>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#a8c4e0"></div><div class="name">accent</div></div>
+      <div class="swatch"><div class="chip" style="background:#e6efff"></div><div class="name">accent 2</div></div>
+      <div class="swatch"><div class="chip" style="background:#0d1119"></div><div class="name">bg</div></div>
+    </div>
+  </div>
+
+  <div class="palette p3">
+    <div class="palette-meta">03</div>
+    <div class="text">
+      <div class="label">— Sky Pearl</div>
+      <h2>Concentrated. <span class="grad">Long-held.</span></h2>
+      <p>Lighter sky blue with warm cream accent2. Reads as sunrise / early morning.</p>
+      <a class="btn">See where our work lives →</a>
+    </div>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#b6d4ec"></div><div class="name">accent</div></div>
+      <div class="swatch"><div class="chip" style="background:#f0eee8"></div><div class="name">accent 2</div></div>
+      <div class="swatch"><div class="chip" style="background:#0e1620"></div><div class="name">bg</div></div>
+    </div>
+  </div>
+
+  <div class="palette p4">
+    <div class="palette-meta">04 / WARM SUGGESTION</div>
+    <div class="text">
+      <div class="label">— Soft Daylight</div>
+      <h2>Concentrated. <span class="grad">Long-held.</span></h2>
+      <p>Soft sky blue paired with warm peach. Golden-hour over the fjord feeling.</p>
+      <a class="btn">See where our work lives →</a>
+    </div>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#c8dcee"></div><div class="name">accent</div></div>
+      <div class="swatch"><div class="chip" style="background:#f8e0c8"></div><div class="name">accent 2</div></div>
+      <div class="swatch"><div class="chip" style="background:#101822"></div><div class="name">bg</div></div>
+    </div>
+  </div>
+
+  <div class="palette p5">
+    <div class="palette-meta">05 / LIGHTEST</div>
+    <div class="text">
+      <div class="label">— Open Sky</div>
+      <h2>Concentrated. <span class="grad">Long-held.</span></h2>
+      <p>Very light blue with warm golden accent. Brightest, most "sky-like" option.</p>
+      <a class="btn">See where our work lives →</a>
+    </div>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#d4e4f2"></div><div class="name">accent</div></div>
+      <div class="swatch"><div class="chip" style="background:#fae0c0"></div><div class="name">accent 2</div></div>
+      <div class="swatch"><div class="chip" style="background:#12202e"></div><div class="name">bg</div></div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

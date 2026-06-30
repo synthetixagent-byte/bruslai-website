@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai AS — glass chess v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #060709;
+    --cream: #f0eada;
+    --cream-dim: #8a8475;
+    --muted: #4a4438;
+    --line: rgba(240, 234, 218, 0.08);
+    --green: #1d3832;
+    --green-light: #2c4636;
+    --teal: #4fd1c5;
+    --teal-soft: #5eead4;
+  }
+  html, body { height: 100%; overflow-x: hidden; }
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.011em;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 200;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+
+  /* ── NAV (prism-style: wordmark left, hamburger right) ── */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 28px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav.top .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+  }
+  nav.top .brand-mark {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--teal-soft), var(--green));
+    display: inline-block;
+  }
+  nav.top .menu {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(240, 234, 218, 0.06);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  nav.top .menu:hover { background: rgba(240, 234, 218, 0.12); }
+  nav.top .menu svg { width: 16px; height: 16px; stroke: var(--cream); }
+
+  /* ── HERO ── tighter, more prism-like proportions */
+  .hero {
+    min-height: 100vh;
+    padding: 130px 40px 100px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: 32px;
+    max-width: 1500px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* TEXT SIDE */
+  .text-side {
+    z-index: 5;
+    padding-top: 20px;
+    max-width: 600px;
+  }
+  .eyebrow {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: 0.04em;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--muted);
+  }
+  h1 {
+    font-weight: 700;
+    font-size: clamp(40px, 4.6vw, 78px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    margin-bottom: 28px;
+    color: var(--cream);
+  }
+  h1 .accent {
+    background: linear-gradient(95deg, var(--teal-soft) 0%, var(--teal) 50%, #2dd4bf 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: italic;
+    font-weight: 600;
+  }
+  .sub {
+    font-size: 1rem;
+    color: var(--cream-dim);
+    line-height: 1.6;
+    max-width: 420px;
+    margin-bottom: 40px;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 22px 14px 26px;
+    background: var(--green);
+    border-radius: 100px;
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background 0.25s, transform 0.25s;
+    border: 1px solid rgba(240, 234, 218, 0.05);
+  }
+  .cta:hover {
+    background: var(--green-light);
+    transform: translateY(-1px);
+  }
+  .cta .arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: var(--teal-soft);
+    border-radius: 50%;
+    color: var(--green);
+    font-size: 1rem;
+    font-weight: 700;
+    transition: transform 0.25s;
+  }
+  .cta:hover .arrow { transform: translateX(3px); }
+
+  /* ── CHESS SIDE ── extends beyond right edge for bleed */
+  .chess-side {
+    position: relative;
+    height: 600px;
+    margin-right: -80px;
+    z-index: 1;
+  }
+  #chess-canvas {
+    position: absolute;
+    inset: 0;
+    cursor: grab;
+  }
+  #chess-canvas:active { cursor: grabbing; }
+
+  /* Atmospheric glow behind chess */
+  .chess-side::before {
+    content: '';
+    position: absolute;
+    inset: -10% -5% -10% -10%;
+    background: radial-gradient(ellipse at 50% 55%, rgba(79, 209, 197, 0.10) 0%, transparent 60%);
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── SCROLL INDICATOR (prism-style) ── */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(240, 234, 218, 0.06);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    animation: bounce 2.5s ease-in-out infinite;
+  }
+  .scroll-indicator svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--cream-dim);
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── BOTTOM HINT PILL (prism-style) ── */
+  .bottom-hint {
+    position: fixed;
+    bottom: 32px;
+    right: 40px;
+    z-index: 40;
+    padding: 10px 18px;
+    background: rgba(240, 234, 218, 0.06);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 0.72rem;
+    color: var(--cream-dim);
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeIn 1.4s ease 1.2s forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  /* ── GROUND REFLECTION (prism-style mirror at bottom) ── */
+  .ground-mirror {
+    position: fixed;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent 0%, rgba(79, 209, 197, 0.03) 50%, rgba(5, 6, 8, 0.6) 100%);
+    pointer-events: none;
+    z-index: 20;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 100px 24px 60px;
+      gap: 20px;
+    }
+    .chess-side { height: 380px; margin-right: 0; }
+    nav.top { padding: 18px 20px; }
+    h1 { font-size: clamp(34px, 9vw, 56px); }
+    .bottom-hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a class="brand">
+    <span class="brand-mark"></span>
+    Brus Lai
+  </a>
+  <button class="menu" aria-label="Menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+      <line x1="3" y1="8" x2="21" y2="8"/>
+      <line x1="3" y1="16" x2="21" y2="16"/>
+    </svg>
+  </button>
+</nav>
+
+<section class="hero">
+  <div class="text-side">
+    <div class="eyebrow">Norwegian holding company</div>
+    <h1>Patient capital<br>for the <span class="accent">long game</span>.</h1>
+    <p class="sub">Strategic positions in technology and AI, paired with a small set of owned software and game ventures we operate ourselves.</p>
+    <a class="cta">
+      View portfolio
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <div class="chess-side">
+    <canvas id="chess-canvas"></canvas>
+  </div>
+
+  <div class="scroll-indicator">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+</section>
+
+<div class="bottom-hint">drag the board to rotate</div>
+<div class="ground-mirror"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.158.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { Reflector } from 'three/addons/objects/Reflector.js';
+
+const canvas = document.getElementById('chess-canvas');
+const container = canvas.parentElement;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 100);
+
+const renderer = new THREE.WebGLRenderer({
+  canvas, antialias: true, alpha: true
+});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+// Lights
+scene.add(new THREE.HemisphereLight(0x88aaff, 0x080a0c, 0.35));
+const key = new THREE.DirectionalLight(0xffffff, 1.5);
+key.position.set(7, 12, 9);
+scene.add(key);
+const tealLight = new THREE.PointLight(0x4fd1c5, 14, 25);
+tealLight.position.set(-5, 7, 5);
+scene.add(tealLight);
+const blueRim = new THREE.PointLight(0x6aaaff, 5, 18);
+blueRim.position.set(6, 4, -4);
+scene.add(blueRim);
+const fill = new THREE.DirectionalLight(0xffe0a8, 0.25);
+fill.position.set(-6, 2, -6);
+scene.add(fill);
+
+// Reflective floor
+const floor = new Reflector(new THREE.CircleGeometry(25, 64), {
+  textureWidth: window.innerWidth * window.devicePixelRatio,
+  textureHeight: window.innerHeight * window.devicePixelRatio,
+  color: 0x0a0c10,
+});
+floor.rotation.x = -Math.PI / 2;
+floor.position.y = -0.01;
+scene.add(floor);
+
+const floorTint = new THREE.Mesh(
+  new THREE.CircleGeometry(25, 64),
+  new THREE.MeshBasicMaterial({ color: 0x060709, transparent: true, opacity: 0.65 })
+);
+floorTint.rotation.x = -Math.PI / 2;
+floorTint.position.y = 0.001;
+scene.add(floorTint);
+
+// Glass board
+const BOARD = 8;
+const SQ = 0.45;
+const TOTAL = BOARD * SQ;
+
+const clearGlass = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff, transmission: 0.95, ior: 1.5, thickness: 0.3,
+  roughness: 0.04, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.02,
+  attenuationColor: new THREE.Color(0xb0e0d8), attenuationDistance: 2,
+  envMapIntensity: 1.5, side: THREE.DoubleSide,
+});
+const tintedGlass = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff, transmission: 0.82, ior: 1.5, thickness: 0.5,
+  roughness: 0.08, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.05,
+  attenuationColor: new THREE.Color(0x2d6e66), attenuationDistance: 0.35,
+  envMapIntensity: 1.2, side: THREE.DoubleSide,
+});
+
+const boardGroup = new THREE.Group();
+for (let x = 0; x < BOARD; x++) {
+  for (let z = 0; z < BOARD; z++) {
+    const isLight = (x + z) % 2 === 0;
+    const sq = new THREE.Mesh(
+      new THREE.BoxGeometry(SQ * 0.98, 0.14, SQ * 0.98),
+      isLight ? clearGlass : tintedGlass
+    );
+    sq.position.set((x - BOARD / 2 + 0.5) * SQ, 0.07, (z - BOARD / 2 + 0.5) * SQ);
+    boardGroup.add(sq);
+  }
+}
+const frame = new THREE.Mesh(
+  new THREE.BoxGeometry(TOTAL + 0.25, 0.06, TOTAL + 0.25),
+  clearGlass
+);
+frame.position.y = 0.03;
+boardGroup.add(frame);
+scene.add(boardGroup);
+
+// Piece material
+const pieceMat = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff, transmission: 0.97, ior: 1.52, thickness: 0.4,
+  roughness: 0.02, metalness: 0, clearcoat: 1, clearcoatRoughness: 0,
+  attenuationColor: new THREE.Color(0x88d8d0), attenuationDistance: 1,
+  envMapIntensity: 1.8, side: THREE.DoubleSide,
+});
+
+function lathe(silhouette) {
+  return new THREE.LatheGeometry(silhouette.map(([r, y]) => new THREE.Vector2(r, y)), 64);
+}
+
+const pawnGeo = lathe([
+  [0.00, 0.00], [0.28, 0.00], [0.28, 0.04], [0.24, 0.06], [0.18, 0.08],
+  [0.16, 0.12], [0.18, 0.20], [0.20, 0.28], [0.18, 0.32], [0.14, 0.36],
+  [0.16, 0.40], [0.20, 0.44], [0.18, 0.48], [0.10, 0.50], [0.00, 0.50]
+]);
+const rookGeo = lathe([
+  [0.00, 0.00], [0.30, 0.00], [0.30, 0.05], [0.24, 0.08], [0.20, 0.11],
+  [0.20, 0.42], [0.24, 0.44], [0.27, 0.46], [0.27, 0.52], [0.20, 0.52],
+  [0.20, 0.55], [0.00, 0.55]
+]);
+const bishopGeo = lathe([
+  [0.00, 0.00], [0.28, 0.00], [0.28, 0.05], [0.22, 0.08], [0.16, 0.11],
+  [0.16, 0.36], [0.20, 0.48], [0.15, 0.54], [0.12, 0.58], [0.18, 0.62],
+  [0.09, 0.74], [0.00, 0.78]
+]);
+const queenGeo = lathe([
+  [0.00, 0.00], [0.31, 0.00], [0.31, 0.06], [0.24, 0.09], [0.18, 0.13],
+  [0.18, 0.55], [0.22, 0.65], [0.18, 0.70], [0.16, 0.74], [0.24, 0.78],
+  [0.27, 0.84], [0.18, 0.92], [0.00, 0.95]
+]);
+const kingGeo = lathe([
+  [0.00, 0.00], [0.33, 0.00], [0.33, 0.07], [0.26, 0.10], [0.20, 0.14],
+  [0.20, 0.60], [0.24, 0.70], [0.20, 0.76], [0.18, 0.80], [0.26, 0.86],
+  [0.30, 0.92], [0.18, 1.00], [0.00, 1.02]
+]);
+
+function knightGeo() {
+  const s = new THREE.Shape();
+  s.moveTo(-0.20, 0); s.lineTo(0.20, 0); s.lineTo(0.20, 0.06);
+  s.lineTo(0.15, 0.10); s.lineTo(0.13, 0.30); s.lineTo(0.16, 0.38);
+  s.lineTo(0.22, 0.45); s.lineTo(0.30, 0.52); s.lineTo(0.32, 0.60);
+  s.lineTo(0.26, 0.66); s.lineTo(0.20, 0.68); s.lineTo(0.12, 0.62);
+  s.lineTo(0.06, 0.64); s.lineTo(0.04, 0.74); s.lineTo(-0.02, 0.76);
+  s.lineTo(-0.10, 0.72); s.lineTo(-0.16, 0.62); s.lineTo(-0.18, 0.50);
+  s.lineTo(-0.16, 0.40); s.lineTo(-0.14, 0.30); s.lineTo(-0.17, 0.20);
+  s.lineTo(-0.20, 0.10); s.lineTo(-0.20, 0);
+  const g = new THREE.ExtrudeGeometry(s, {
+    depth: 0.14, bevelEnabled: true, bevelSegments: 4,
+    steps: 1, bevelSize: 0.012, bevelThickness: 0.012,
+  });
+  g.translate(0, 0, -0.07);
+  return g;
+}
+const knGeo = knightGeo();
+
+function piece(geo, withCross = false, isKnight = false) {
+  const mesh = new THREE.Mesh(geo, pieceMat);
+  if (isKnight) return mesh;
+  if (withCross) {
+    const group = new THREE.Group();
+    group.add(mesh);
+    const v = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.14, 0.04), pieceMat);
+    v.position.y = 1.10;
+    const h = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.04, 0.04), pieceMat);
+    h.position.y = 1.12;
+    group.add(v); group.add(h);
+    return group;
+  }
+  return mesh;
+}
+
+const S = 0.55;   // ← much smaller pieces
+
+function place(parent, p, file, rank, faceForward = false) {
+  p.position.set((file - 3.5) * SQ, 0.14, (rank - 3.5) * SQ);
+  p.scale.set(S, S, S);
+  if (faceForward) p.rotation.y = rank < 4 ? 0 : Math.PI;
+  parent.add(p);
+}
+
+const piecesGroup = new THREE.Group();
+const backRow = [
+  ['rook', 0], ['knight', 1], ['bishop', 2], ['queen', 3],
+  ['king', 4], ['bishop', 5], ['knight', 6], ['rook', 7],
+];
+function getGeo(type) {
+  return { rook: rookGeo, knight: knGeo, bishop: bishopGeo, queen: queenGeo, king: kingGeo }[type];
+}
+function pieceFor(type) {
+  if (type === 'knight') return piece(knGeo, false, true);
+  if (type === 'king') return piece(kingGeo, true);
+  return piece(getGeo(type));
+}
+backRow.forEach(([t, f]) => place(piecesGroup, pieceFor(t), f, 0, t === 'knight'));
+for (let f = 0; f < 8; f++) place(piecesGroup, piece(pawnGeo), f, 1);
+backRow.forEach(([t, f]) => place(piecesGroup, pieceFor(t), f, 7, t === 'knight'));
+for (let f = 0; f < 8; f++) place(piecesGroup, piece(pawnGeo), f, 6);
+scene.add(piecesGroup);
+
+// ── INTERACTION — camera far back, board ALWAYS fits ──
+let yaw = Math.PI / 5;
+let pitch = Math.PI / 2.8;
+const radius = 12;     // ← far back
+let isDragging = false;
+let lastX = 0, lastY = 0;
+let autoRotate = true;
+let autoRotateResumeTimeout = null;
+
+function updateCamera() {
+  const x = radius * Math.sin(pitch) * Math.sin(yaw);
+  const y = radius * Math.cos(pitch);
+  const z = radius * Math.sin(pitch) * Math.cos(yaw);
+  camera.position.set(x, y, z);
+  camera.lookAt(0, 0.3, 0);
+}
+updateCamera();
+
+canvas.addEventListener('mousedown', e => {
+  isDragging = true;
+  autoRotate = false;
+  clearTimeout(autoRotateResumeTimeout);
+  lastX = e.clientX; lastY = e.clientY;
+});
+window.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  yaw -= (e.clientX - lastX) * 0.005;
+  pitch -= (e.clientY - lastY) * 0.003;
+  pitch = Math.max(0.5, Math.min(Math.PI / 2 - 0.2, pitch));
+  lastX = e.clientX; lastY = e.clientY;
+  updateCamera();
+});
+window.addEventListener('mouseup', () => {
+  if (!isDragging) return;
+  isDragging = false;
+  autoRotateResumeTimeout = setTimeout(() => { autoRotate = true; }, 3000);
+});
+canvas.addEventListener('touchstart', e => {
+  isDragging = true;
+  autoRotate = false;
+  clearTimeout(autoRotateResumeTimeout);
+  const p = e.touches[0];
+  lastX = p.clientX; lastY = p.clientY;
+}, { passive: true });
+window.addEventListener('touchmove', e => {
+  if (!isDragging) return;
+  e.preventDefault();
+  const p = e.touches[0];
+  yaw -= (p.clientX - lastX) * 0.005;
+  pitch -= (p.clientY - lastY) * 0.003;
+  pitch = Math.max(0.5, Math.min(Math.PI / 2 - 0.2, pitch));
+  lastX = p.clientX; lastY = p.clientY;
+  updateCamera();
+}, { passive: false });
+window.addEventListener('touchend', () => {
+  if (!isDragging) return;
+  isDragging = false;
+  autoRotateResumeTimeout = setTimeout(() => { autoRotate = true; }, 3000);
+});
+
+function onResize() {
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+}
+window.addEventListener('resize', onResize);
+onResize();
+
+function tick() {
+  if (autoRotate) {
+    yaw += 0.0014;
+    updateCamera();
+  }
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+tick();
+</script>
+
+</body>
+</html>

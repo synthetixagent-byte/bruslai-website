@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brus Lai — Concept 4: Spread</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700&family=Archivo:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#101822; --bg2:#161f2a;
+  --accent:#c8dcee; --accent2:#f8e0c8;
+  --text:#f5f7fb; --muted:#c0c9d8; --faint:#8a94a4;
+  --border:rgba(245,247,251,.12);
+}
+body{background:var(--bg);color:var(--text);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.concept-label{position:fixed;top:20px;left:20px;z-index:100;padding:8px 14px;background:rgba(245,247,251,.06);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:100px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--accent)}
+
+.interlude{position:relative;height:60vh;min-height:380px;background-image:linear-gradient(rgba(16,24,34,.35),rgba(16,24,34,.55)),url('interlude.jpg');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.interlude-caption{text-align:center;color:var(--text);font-family:'Unbounded',sans-serif;font-style:italic;font-weight:300;font-size:clamp(22px,2.8vw,40px);max-width:760px;padding:0 24px;text-shadow:0 2px 14px rgba(0,0,0,.5);letter-spacing:-.01em}
+.interlude-caption small{display:block;margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--accent2);font-style:normal;font-weight:400;text-shadow:none}
+
+/* MAGAZINE SPREAD */
+.spread{padding:14vh clamp(20px,5vw,80px);max-width:1500px;margin:0 auto}
+.spread-row{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);align-items:start;padding:10vh 0;border-top:1px solid var(--border)}
+.spread-row:first-child{border-top:0}
+.spread-row.reverse{direction:rtl}
+.spread-row.reverse > *{direction:ltr}
+
+.big-title{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(48px,7vw,120px);line-height:.95;letter-spacing:-.04em;color:var(--text)}
+.big-title .grad{font-weight:300;background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.big-title .tag{display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--accent);font-weight:500;margin-bottom:20px;text-transform:uppercase}
+
+.detail-stack{display:flex;flex-direction:column;gap:36px;padding-top:60px}
+.detail{}
+.detail h4{font-family:'Unbounded',sans-serif;font-weight:500;font-size:22px;letter-spacing:-.01em;margin-bottom:10px;color:var(--text)}
+.detail p{font-size:16px;line-height:1.65;color:var(--muted);font-weight:300;max-width:42ch}
+.detail .meta{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--faint);margin-bottom:8px;text-transform:uppercase}
+
+/* Pull quote */
+.pull-quote{padding:14vh 32px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(180deg,transparent,rgba(248,224,200,.04),transparent)}
+.pull-quote .mark{font-family:'Unbounded',sans-serif;font-size:80px;line-height:1;color:var(--accent);margin-bottom:24px;font-weight:300}
+.pull-quote blockquote{font-family:'Unbounded',sans-serif;font-style:italic;font-weight:300;font-size:clamp(28px,3.6vw,48px);line-height:1.2;letter-spacing:-.025em;max-width:900px;margin:0 auto;color:var(--text)}
+.pull-quote cite{display:block;margin-top:28px;font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--faint)}
+
+.contact-mini{text-align:center;padding:10vh 24px 8vh}
+.contact-mini h3{font-family:'Unbounded',sans-serif;font-weight:300;font-size:clamp(28px,3.4vw,44px);line-height:1;margin-bottom:32px;letter-spacing:-.025em}
+.contact-mini .mail{display:inline-block;padding:16px 32px;background:linear-gradient(100deg,var(--accent),var(--accent2));color:var(--bg);border-radius:100px;text-decoration:none;font-size:16px;font-weight:500}
+.contact-mini .addr{margin-top:36px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint);letter-spacing:.04em}
+
+footer{padding:32px 40px;border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);text-align:center;letter-spacing:.05em;line-height:1.8}
+
+@media (max-width:800px){.spread-row{grid-template-columns:1fr;gap:30px}.spread-row.reverse{direction:ltr}.detail-stack{padding-top:0}}
+</style>
+</head>
+<body>
+
+<div class="concept-label">CONCEPT 04 / SPREAD</div>
+
+<section class="interlude">
+  <div class="interlude-caption">
+    Operated from Western Norway.
+    <small>STRUSSHAMN &middot; 60.4&deg; N</small>
+  </div>
+</section>
+
+<main class="spread">
+
+  <!-- Row 1: BIG TITLE LEFT, details right -->
+  <div class="spread-row">
+    <h2 class="big-title">
+      <span class="tag">01 / Capital</span>
+      <span class="grad">Long positions</span>
+    </h2>
+    <div class="detail-stack">
+      <div class="detail">
+        <div class="meta">AI Infrastructure</div>
+        <p>Companies architecting the next decade of compute, models, and applied AI, held with multi-year conviction.</p>
+      </div>
+      <div class="detail">
+        <div class="meta">US Platforms</div>
+        <p>Durable franchises with structural advantages: distribution, data, switching costs. We tend to own the architects, not the visitors.</p>
+      </div>
+      <div class="detail">
+        <div class="meta">Emerging Markets</div>
+        <p>Quiet exposure to under-covered geographies where governance and growth align.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: REVERSED — details left, BIG TITLE right -->
+  <div class="spread-row reverse">
+    <h2 class="big-title">
+      <span class="tag">02 / Software</span>
+      Owned <span class="grad">ventures</span>
+    </h2>
+    <div class="detail-stack">
+      <div class="detail">
+        <div class="meta">Mobile Games</div>
+        <p>Daily puzzles for iOS and Android. Long sessions per user, low marketing overhead, products people return to without prompting.</p>
+      </div>
+      <div class="detail">
+        <div class="meta">Accounting Software</div>
+        <p>Modern bookkeeping that just works. Built for small businesses and accountants who value their time. In development.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: BIG TITLE LEFT -->
+  <div class="spread-row">
+    <h2 class="big-title">
+      <span class="tag">03 / Approach</span>
+      <span class="grad">How</span> we work
+    </h2>
+    <div class="detail-stack">
+      <div class="detail">
+        <div class="meta">Decades, not quarters</div>
+        <p>Software takes years to compound. We don't shortcut that.</p>
+      </div>
+      <div class="detail">
+        <div class="meta">Operator led</div>
+        <p>We build the products we back, which keeps our investment thinking grounded in real product reality.</p>
+      </div>
+      <div class="detail">
+        <div class="meta">Boring is good</div>
+        <p>We optimise for products that work reliably and businesses that don't blow up. Growth comes from that, not from hype.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<aside class="pull-quote">
+  <div class="mark">"</div>
+  <blockquote>We're not a fund. We don't operate on exit timelines.</blockquote>
+  <cite>BRUS LAI AS</cite>
+</aside>
+
+<section class="contact-mini">
+  <h3>Let's talk.</h3>
+  <a class="mail" href="#" onclick="this.href='mailto:'+atob('Y29udGFjdEBicnVzbGFpLm5v');return true;">contact@bruslai.no →</a>
+  <div class="addr">Eidsvikvegen 26 &middot; 5302 Strusshamn &middot; Norway</div>
+</section>
+
+<footer>
+  Brus Lai AS &middot; Aksjeselskap &middot; Org. nr. 922 712 476 &middot; &copy; 2026
+</footer>
+
+</body>
+</html>
