@@ -1,171 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terms of Service — Brus Lai AS</title>
-  <meta name="description" content="Terms of service covering all products and services operated by Brus Lai AS." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    :root { --bg: #f7f5f0; --surface: #ffffff; --ink: #161614; --muted: #6e6c66; --line: #e6e2d8; --accent: #1a4d3e; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; line-height: 1.7; }
-    .container { max-width: 760px; margin: 0 auto; padding: 0 32px; }
-    nav.top { position: sticky; top: 0; z-index: 50; background: rgba(247,245,240,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-    nav.top .inner { display: flex; align-items: center; justify-content: space-between; padding: 20px 32px; max-width: 1100px; margin: 0 auto; }
-    nav.top a.brand { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
-    nav.top ul { list-style: none; display: flex; gap: 36px; }
-    nav.top ul a { color: var(--ink); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
-    nav.top ul a:hover { color: var(--accent); }
-    header.page { padding: 100px 0 50px; }
-    header.page .eyebrow { font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 20px; }
-    header.page h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(2rem, 4.5vw, 3rem); letter-spacing: -0.02em; line-height: 1.1; }
-    .updated { color: var(--muted); margin-top: 14px; font-size: 0.9rem; }
-    main { padding-bottom: 100px; }
-    main h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.5rem; margin-top: 52px; margin-bottom: 14px; }
-    main h2:first-child { margin-top: 30px; }
-    main h3 { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1.02rem; margin-top: 28px; margin-bottom: 10px; }
-    main p, main ul { color: var(--ink); margin-bottom: 14px; }
-    main ul { padding-left: 1.4em; }
-    main ul li { margin-bottom: 6px; }
-    main a { color: var(--accent); }
-    .lead { font-size: 1.08rem; color: var(--muted); margin-bottom: 30px; }
-    .product-box { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 22px 26px; margin-top: 18px; border-radius: 0 4px 4px 0; }
-    .product-box h3 { margin-top: 0; }
-    footer { border-top: 1px solid var(--line); padding: 40px 0; color: var(--muted); font-size: 0.85rem; }
-    footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px; }
-    footer ul.footer-links { list-style: none; display: flex; gap: 20px; }
-    footer ul.footer-links a { color: var(--muted); text-decoration: none; }
-    footer ul.footer-links a:hover { color: var(--ink); }
-    @media (max-width: 720px) { nav.top ul { display: none; } header.page { padding: 60px 0 30px; } }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Service — Brus Lai AS</title>
+<meta name="description" content="Terms of service covering all products and services operated by Brus Lai AS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600&family=Archivo:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#101822; --bg2:#161f2a;
+  --accent:#c8dcee; --accent2:#f8e0c8;
+  --text:#f5f7fb; --muted:#c0c9d8; --faint:#8a94a4;
+  --surface:rgba(255,255,255,.035); --surface2:rgba(255,255,255,.05);
+  --border:rgba(245,247,251,.12);
+  --glowA:rgba(200,220,238,.25); --glowB:rgba(248,224,200,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Archivo',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;font-weight:300}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(200,220,238,.25);transition:border-color .25s,color .25s}
+a:hover{color:var(--accent2);border-color:var(--accent2)}
+::selection{background:var(--accent);color:var(--bg)}
+
+.bg-wrap{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.orb{position:absolute;border-radius:999px;filter:blur(60px)}
+.orb.a{top:-20%;left:-10%;width:40vw;height:40vw;background:radial-gradient(circle,var(--glowA),transparent 65%)}
+.orb.b{bottom:-15%;right:-12%;width:36vw;height:36vw;background:radial-gradient(circle,var(--glowB),transparent 65%)}
+.grain{position:fixed;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.5'/></svg>");opacity:.04;mix-blend-mode:overlay;pointer-events:none;z-index:1}
+
+.page{position:relative;z-index:3}
+.container{max-width:780px;margin:0 auto;padding:0 32px}
+
+nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:22px clamp(20px,6vw,90px);backdrop-filter:blur(14px);background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 75%,transparent),transparent);border-bottom:1px solid var(--border)}
+.brand{font-family:'Unbounded',sans-serif;font-weight:600;font-size:16px;letter-spacing:.01em;color:var(--text);text-decoration:none;border:none}
+.brand:hover{color:var(--text)}
+.nav-links{display:flex;gap:clamp(16px,2.4vw,34px);font-size:13.5px;color:var(--muted)}
+.nav-link{position:relative;text-decoration:none;transition:color .3s;color:var(--muted);border:none}
+.nav-link::after{content:"";position:absolute;left:0;bottom:-3px;height:1px;width:0;background:var(--accent);transition:width .35s cubic-bezier(.2,.7,.2,1)}
+.nav-link:hover{color:var(--text)}
+.nav-link:hover::after{width:100%}
+.btn{display:inline-block;text-decoration:none;border-radius:999px;font-weight:500;transition:filter .3s;border:none}
+.btn-solid{color:var(--bg);background:var(--text);font-size:13px;padding:11px 20px}
+.btn-solid:hover{filter:brightness(1.08);color:var(--bg)}
+
+header.page-head{padding:14vh 0 6vh}
+header.page-head .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--accent);margin-bottom:24px;text-transform:uppercase}
+header.page-head h1{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(40px,5vw,72px);letter-spacing:-.03em;line-height:1.0;color:var(--text);overflow-wrap:anywhere}
+.updated{font-family:'IBM Plex Mono',monospace;color:var(--faint);margin-top:24px;font-size:12px;letter-spacing:.05em}
+
+main{padding-bottom:14vh}
+.lead{font-size:1.15rem;color:var(--text);margin-bottom:42px;line-height:1.7;font-weight:400;border-left:2px solid var(--accent);padding-left:24px}
+main h2{font-family:'Unbounded',sans-serif;font-weight:500;font-size:clamp(1.4rem,2.2vw,1.7rem);margin-top:64px;margin-bottom:18px;letter-spacing:-.015em;color:var(--text);line-height:1.2}
+main h2:first-child{margin-top:30px}
+main h3{font-family:'Unbounded',sans-serif;font-weight:500;font-size:1.08rem;margin-top:32px;margin-bottom:12px;color:var(--text);letter-spacing:-.005em}
+main p,main ul{color:var(--muted);margin-bottom:16px;font-size:16.5px}
+main ul{padding-left:1.4em}
+main ul li{margin-bottom:8px}
+main strong{color:var(--text);font-weight:500}
+
+.product-box{background:linear-gradient(150deg,var(--surface2),var(--surface));border:1px solid var(--border);border-left:3px solid var(--accent);padding:28px 32px;margin-top:22px;border-radius:0 14px 14px 0}
+.product-box h3{margin-top:0;color:var(--text)}
+.product-box p{color:var(--muted)}
+
+footer{padding:36px clamp(20px,6vw,90px);border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center}
+footer .legal-line{margin:0;font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.8;color:var(--faint);max-width:72ch}
+footer .legal-line strong{color:var(--text);font-weight:500}
+.foot-links{display:flex;gap:24px;font-family:'IBM Plex Mono',monospace;font-size:11px}
+.foot-links a{color:var(--faint);border:none}
+.foot-links a:hover{color:var(--accent)}
+
+@media (max-width:720px){
+  .nav-links{display:none}
+  header.page-head{padding:8vh 0 4vh}
+  main h2{margin-top:48px}
+}
+</style>
 </head>
 <body>
-  <nav class="top">
-    <div class="inner">
-      <a class="brand" href="index.html">Brus Lai AS</a>
-      <ul>
-        <li><a href="index.html#about">About</a></li>
-        <li><a href="index.html#portfolio">Portfolio</a></li>
-        <li><a href="index.html#approach">Approach</a></li>
-        <li><a href="index.html#contact">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+<div class="page-root">
 
-  <header class="page container">
-    <div class="eyebrow">Legal</div>
-    <h1>Terms of Service</h1>
-    <div class="updated">Last updated: May 14, 2026</div>
-  </header>
+  <div class="bg-wrap">
+    <div class="orb a"></div>
+    <div class="orb b"></div>
+  </div>
+  <div class="grain"></div>
 
-  <main class="container">
-    <p class="lead">
-      These Terms of Service ("Terms") govern your use of the products, applications, games, and websites operated by Brus Lai AS ("we", "our", "us"). By accessing or using any of our services, you agree to be bound by these Terms.
-    </p>
+  <div class="page">
 
-    <h2>1. The company</h2>
-    <p>
-      Brus Lai AS is a Norwegian limited company (organisasjonsnummer 922 712 476), with registered office at Eidsvikvegen 26, 5302 Strusshamn, Norway.
-    </p>
-
-    <h2>2. Scope</h2>
-    <p>These Terms apply to:</p>
-    <ul>
-      <li>This website and any other Brus Lai AS websites</li>
-      <li>All mobile applications, games, and digital products developed and operated by Brus Lai AS, including (without limitation) Vexsort</li>
-      <li>Any communications and correspondence between you and Brus Lai AS</li>
-    </ul>
-    <p>Where a specific product publishes its own supplemental terms, those terms apply in addition to (and, in the event of conflict, override) the general provisions below for that product.</p>
-
-    <h2>3. Eligibility</h2>
-    <p>You must be at least 13 years of age, or the minimum age of digital consent in your jurisdiction, to use our services. If you are using a service on behalf of an organisation, you represent that you have authority to bind that organisation to these Terms.</p>
-
-    <h2>4. License</h2>
-    <p>Brus Lai AS grants you a personal, non-transferable, non-exclusive, revocable license to access and use our products for personal, non-commercial purposes, subject to these Terms.</p>
-    <p>You may not:</p>
-    <ul>
-      <li>Copy, modify, distribute, sell, lease, or sublicense any part of our products</li>
-      <li>Reverse engineer, decompile, or attempt to extract source code or assets</li>
-      <li>Use our services in a way that violates any applicable law or third-party right</li>
-      <li>Interfere with the operation of our services or attempt to gain unauthorised access to systems or data</li>
-    </ul>
-
-    <h2>5. Accounts and authentication</h2>
-    <p>Our current products do not require account creation. If we introduce optional accounts or sign-in features in the future, we will publish supplemental terms governing their use.</p>
-
-    <h2>6. User conduct</h2>
-    <p>When using our services, you agree not to:</p>
-    <ul>
-      <li>Use automated tools, scripts, bots, or other software to interact with our services in a manner not intended by us</li>
-      <li>Attempt to manipulate leaderboards, statistics, rankings, or any score-submission mechanism</li>
-      <li>Reverse engineer, decompile, or otherwise attempt to derive source code from our applications</li>
-      <li>Use our services to harass, defame, abuse, or harm others</li>
-      <li>Upload or transmit malicious code, viruses, or harmful material</li>
-      <li>Engage in any activity that disrupts or interferes with our services or other users' enjoyment of them</li>
-    </ul>
-    <p>We reserve the right to suspend, restrict, or terminate access to our services for users who violate these provisions.</p>
-
-    <h2>7. Intellectual property</h2>
-    <p>All content within our products and websites — including but not limited to source code, designs, graphics, audio, level designs, puzzle generation systems, names, logos, trademarks, and trade dress — is the exclusive intellectual property of Brus Lai AS or its licensors. All rights are reserved.</p>
-    <p>You may not use any Brus Lai AS trademarks, branding, or proprietary content without our prior written permission, except as expressly permitted within the functionality of the relevant product (for example, sharing your own score via a built-in share feature).</p>
-
-    <h2>8. User-submitted content</h2>
-    <p>Some of our products allow you to submit content such as anonymous gameplay scores. By submitting content, you grant Brus Lai AS a worldwide, royalty-free, perpetual license to use, store, and display that content for the purpose of operating the relevant service (for example, aggregating scores into a leaderboard).</p>
-
-    <h2>9. Availability and changes</h2>
-    <p>We aim to keep our services available and functional but do not guarantee uninterrupted access. We may modify, suspend, or discontinue any product, feature, or service — in whole or in part — at any time, with or without notice. We are not liable to you or any third party for any modification, suspension, or discontinuation.</p>
-
-    <h2>10. Disclaimer of warranties</h2>
-    <p>Our services are provided "as is" and "as available" without warranties of any kind, whether express or implied, including without limitation warranties of merchantability, fitness for a particular purpose, non-infringement, or that the services will be uninterrupted, error-free, or secure. Use of our services is at your own risk.</p>
-
-    <h2>11. Limitation of liability</h2>
-    <p>To the maximum extent permitted by law, Brus Lai AS, its directors, employees, agents, and licensors shall not be liable for any indirect, incidental, consequential, special, exemplary, or punitive damages arising out of or in connection with your use of our services, including without limitation loss of profits, revenue, data, or goodwill.</p>
-    <p>Nothing in these Terms excludes or limits any liability that cannot be excluded or limited under applicable mandatory law, including consumer protection law.</p>
-
-    <h2>12. Indemnification</h2>
-    <p>You agree to indemnify and hold Brus Lai AS and its affiliates harmless from any claims, damages, losses, liabilities, costs, and expenses (including reasonable legal fees) arising from your violation of these Terms, your violation of any rights of a third party, or your misuse of our services.</p>
-
-    <h2>13. Governing law and jurisdiction</h2>
-    <p>These Terms are governed by the laws of Norway, without regard to conflict of law principles. Any dispute arising under or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Norway, except where mandatory consumer protection law provides otherwise.</p>
-
-    <h2>14. Changes to these terms</h2>
-    <p>We may update these Terms from time to time. Material changes will be flagged with a revised "last updated" date and, where appropriate, an in-app notice. Continued use of our services after a change indicates acceptance of the revised Terms.</p>
-
-    <h2>15. Per-product terms</h2>
-    <p>The following sections describe terms specific to individual Brus Lai AS products.</p>
-
-    <div class="product-box">
-      <h3>15.1 Vexsort (mobile game)</h3>
-      <p>Vexsort provides one free daily puzzle to all players worldwide, synchronised to UTC, plus a 30-day catch-up archive for replaying past puzzles. Move counts and ranks are computed against the global pool of anonymous solvers.</p>
-      <p>We reserve the right to change puzzle formats, restart and undo allowances, and any other gameplay parameters at any time. Scores resulting from cheating, automated play, or manipulation may be removed without notice.</p>
-    </div>
-
-    <h2>16. Contact</h2>
-    <p>
-      Brus Lai AS<br />
-      Eidsvikvegen 26, 5302 Strusshamn<br />
-      Norway<br />
-      Org. nr. 922 712 476<br />
-      <a href="mailto:contact@bruslai.no">contact@bruslai.no</a>
-    </p>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div>
-          <strong style="color: var(--ink); font-weight: 600;">Brus Lai AS</strong> &middot; Org.&nbsp;nr. 922&nbsp;712&nbsp;476<br />
-          Eidsvikvegen 26, 5302 Strusshamn, Norway
-        </div>
-        <ul class="footer-links">
-          <li><a href="privacy.html">Privacy</a></li>
-          <li><a href="terms.html">Terms</a></li>
-        </ul>
+    <nav>
+      <a class="brand" href="index.html">Brus&#8201;Lai</a>
+      <div class="nav-links">
+        <a class="nav-link" href="index.html#about">About</a>
+        <a class="nav-link" href="index.html#work">Work</a>
       </div>
-    </div>
-  </footer>
+      <a class="btn btn-solid" href="index.html#contact">Contact</a>
+    </nav>
+
+    <header class="page-head container">
+      <div class="eyebrow">— Legal</div>
+      <h1>Terms of Service</h1>
+      <div class="updated">LAST UPDATED &middot; MAY 14, 2026</div>
+    </header>
+
+    <main class="container">
+      <p class="lead">
+        These Terms of Service ("Terms") govern your use of the products, applications, games, and websites operated by Brus Lai AS ("we", "our", "us"). By accessing or using any of our services, you agree to be bound by these Terms.
+      </p>
+
+      <h2>1. The company</h2>
+      <p>Brus Lai AS is a Norwegian limited company (organisasjonsnummer 922 712 476), with registered office at Eidsvikvegen 26, 5302 Strusshamn, Norway.</p>
+
+      <h2>2. Scope</h2>
+      <p>These Terms apply to:</p>
+      <ul>
+        <li>This website and any other Brus Lai AS websites</li>
+        <li>All mobile applications, games, and digital products developed and operated by Brus Lai AS, including (without limitation) Vexsort</li>
+        <li>Any communications and correspondence between you and Brus Lai AS</li>
+      </ul>
+      <p>Where a specific product publishes its own supplemental terms, those terms apply in addition to (and, in the event of conflict, override) the general provisions below for that product.</p>
+
+      <h2>3. Eligibility</h2>
+      <p>You must be at least 13 years of age, or the minimum age of digital consent in your jurisdiction, to use our services. If you are using a service on behalf of an organisation, you represent that you have authority to bind that organisation to these Terms.</p>
+
+      <h2>4. License</h2>
+      <p>Brus Lai AS grants you a personal, non-transferable, non-exclusive, revocable license to access and use our products for personal, non-commercial purposes, subject to these Terms.</p>
+      <p>You may not:</p>
+      <ul>
+        <li>Copy, modify, distribute, sell, lease, or sublicense any part of our products</li>
+        <li>Reverse engineer, decompile, or attempt to extract source code or assets</li>
+        <li>Use our services in a way that violates any applicable law or third-party right</li>
+        <li>Interfere with the operation of our services or attempt to gain unauthorised access to systems or data</li>
+      </ul>
+
+      <h2>5. Accounts and authentication</h2>
+      <p>Our current products do not require account creation. If we introduce optional accounts or sign-in features in the future, we will publish supplemental terms governing their use.</p>
+
+      <h2>6. User conduct</h2>
+      <p>When using our services, you agree not to:</p>
+      <ul>
+        <li>Use automated tools, scripts, bots, or other software to interact with our services in a manner not intended by us</li>
+        <li>Attempt to manipulate leaderboards, statistics, rankings, or any score-submission mechanism</li>
+        <li>Reverse engineer, decompile, or otherwise attempt to derive source code from our applications</li>
+        <li>Use our services to harass, defame, abuse, or harm others</li>
+        <li>Upload or transmit malicious code, viruses, or harmful material</li>
+        <li>Engage in any activity that disrupts or interferes with our services or other users' enjoyment of them</li>
+      </ul>
+      <p>We reserve the right to suspend, restrict, or terminate access to our services for users who violate these provisions.</p>
+
+      <h2>7. Intellectual property</h2>
+      <p>All content within our products and websites, including but not limited to source code, designs, graphics, audio, level designs, puzzle generation systems, names, logos, trademarks, and trade dress, is the exclusive intellectual property of Brus Lai AS or its licensors. All rights are reserved.</p>
+      <p>You may not use any Brus Lai AS trademarks, branding, or proprietary content without our prior written permission, except as expressly permitted within the functionality of the relevant product (for example, sharing your own score via a built-in share feature).</p>
+
+      <h2>8. User-submitted content</h2>
+      <p>Some of our products allow you to submit content such as anonymous gameplay scores. By submitting content, you grant Brus Lai AS a worldwide, royalty-free, perpetual license to use, store, and display that content for the purpose of operating the relevant service (for example, aggregating scores into a leaderboard).</p>
+
+      <h2>9. Availability and changes</h2>
+      <p>We aim to keep our services available and functional but do not guarantee uninterrupted access. We may modify, suspend, or discontinue any product, feature, or service, in whole or in part, at any time, with or without notice. We are not liable to you or any third party for any modification, suspension, or discontinuation.</p>
+
+      <h2>10. Disclaimer of warranties</h2>
+      <p>Our services are provided "as is" and "as available" without warranties of any kind, whether express or implied, including without limitation warranties of merchantability, fitness for a particular purpose, non-infringement, or that the services will be uninterrupted, error-free, or secure. Use of our services is at your own risk.</p>
+
+      <h2>11. Limitation of liability</h2>
+      <p>To the maximum extent permitted by law, Brus Lai AS, its directors, employees, agents, and licensors shall not be liable for any indirect, incidental, consequential, special, exemplary, or punitive damages arising out of or in connection with your use of our services, including without limitation loss of profits, revenue, data, or goodwill.</p>
+      <p>Nothing in these Terms excludes or limits any liability that cannot be excluded or limited under applicable mandatory law, including consumer protection law.</p>
+
+      <h2>12. Indemnification</h2>
+      <p>You agree to indemnify and hold Brus Lai AS and its affiliates harmless from any claims, damages, losses, liabilities, costs, and expenses (including reasonable legal fees) arising from your violation of these Terms, your violation of any rights of a third party, or your misuse of our services.</p>
+
+      <h2>13. Governing law and jurisdiction</h2>
+      <p>These Terms are governed by the laws of Norway, without regard to conflict of law principles. Any dispute arising under or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Norway, except where mandatory consumer protection law provides otherwise.</p>
+
+      <h2>14. Changes to these terms</h2>
+      <p>We may update these Terms from time to time. Material changes will be flagged with a revised "last updated" date and, where appropriate, an in-app notice. Continued use of our services after a change indicates acceptance of the revised Terms.</p>
+
+      <h2>15. Per-product terms</h2>
+      <p>The following sections describe terms specific to individual Brus Lai AS products.</p>
+
+      <div class="product-box">
+        <h3>15.1 Vexsort (mobile game)</h3>
+        <p>Vexsort provides one free daily puzzle to all players worldwide, synchronised to UTC, plus a 30-day catch-up archive for replaying past puzzles. Move counts and ranks are computed against the global pool of anonymous solvers.</p>
+        <p>We reserve the right to change puzzle formats, restart and undo allowances, and any other gameplay parameters at any time. Scores resulting from cheating, automated play, or manipulation may be removed without notice.</p>
+      </div>
+
+      <h2>16. Contact</h2>
+      <p>
+        Brus Lai AS<br>
+        Eidsvikvegen 26, 5302 Strusshamn<br>
+        Norway<br>
+        Org. nr. 922 712 476<br>
+        <a href="mailto:contact@bruslai.no">contact@bruslai.no</a>
+      </p>
+    </main>
+
+    <footer>
+      <p class="legal-line"><strong>Brus Lai AS</strong> &middot; Norwegian limited company (Aksjeselskap) &middot; Org. nr. 922 712 476 &middot; Eidsvikvegen 26, 5302 Strusshamn, Norway &middot; &copy; 2026</p>
+      <div class="foot-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </footer>
+
+  </div>
+</div>
 </body>
 </html>
