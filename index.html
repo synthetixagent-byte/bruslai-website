@@ -101,7 +101,7 @@ nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-con
 .btn-mail{color:var(--bg);background:linear-gradient(100deg,var(--accent),var(--accent2));font-size:clamp(17px,2vw,22px);padding:18px 38px;margin-top:46px}
 
 /* hero */
-.hero{min-height:90vh;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:clamp(30px,5vw,64px);padding:6vh clamp(20px,6vw,90px) 10vh;position:relative}
+.hero{min-height:90vh;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:clamp(30px,5vw,64px);padding:6vh clamp(20px,6vw,90px) 6vh;position:relative}
 h1.title{margin:0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:clamp(40px,5.4vw,86px);line-height:1.02;letter-spacing:-.035em;max-width:18ch}
 .grad{font-weight:300;background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
 .lede{margin:40px 0 0;max-width:540px;font-size:clamp(17px,1.7vw,21px);line-height:1.6;color:var(--muted);font-weight:300}
@@ -111,8 +111,8 @@ h1.title{margin:0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:c
    (canvas is no longer interactive — just auto-rotates) */
 #mobius{width:100%;height:100%;display:block;pointer-events:none}
 
-/* sections — no border-top; orbs + spacing handle visual separation */
-section.band{padding:13vh clamp(20px,6vw,90px);scroll-margin-top:70px}
+/* sections — subtle border-top + reduced top padding for tighter rhythm */
+section.band{padding:8vh clamp(20px,6vw,90px) 10vh;border-top:1px solid var(--border);scroll-margin-top:70px}
 .kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;color:var(--accent);margin-bottom:22px}
 h2.head{margin:0;font-family:'Unbounded',sans-serif;font-weight:500;letter-spacing:-.025em;line-height:1}
 .about-grid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(40px,6vw,90px)}
