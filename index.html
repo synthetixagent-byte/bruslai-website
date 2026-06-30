@@ -102,8 +102,8 @@ h1.title{margin:0;font-family:'Unbounded',sans-serif;font-weight:600;font-size:c
    (canvas is no longer interactive — just auto-rotates) */
 #mobius{width:100%;height:100%;display:block;pointer-events:none}
 
-/* sections */
-section.band{padding:13vh clamp(20px,6vw,90px);border-top:1px solid var(--border);scroll-margin-top:70px}
+/* sections — no border-top; orbs + spacing handle visual separation */
+section.band{padding:13vh clamp(20px,6vw,90px);scroll-margin-top:70px}
 .kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;color:var(--accent);margin-bottom:22px}
 h2.head{margin:0;font-family:'Unbounded',sans-serif;font-weight:500;letter-spacing:-.025em;line-height:1}
 .about-grid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(40px,6vw,90px)}
@@ -310,7 +310,8 @@ applyPalette(ACTIVE_PALETTE);
   const dpr = Math.min(2, window.devicePixelRatio || 1);
   const state = { rx:-0.62, ry:0.7, visible:false, raf:null };
 
-  const U=150, V=10, R=1.0, W=0.42;
+  // Reduced from 150×10=1500 quads to 60×6=360 quads (76% fewer) for perf.
+  const U=60, V=6, R=1.0, W=0.42;
   const pts=[];
   for(let i=0;i<=U;i++){
     const u=i/U*Math.PI*2, cu=Math.cos(u), su=Math.sin(u), cu2=Math.cos(u/2), su2=Math.sin(u/2);
@@ -358,10 +359,8 @@ applyPalette(ACTIVE_PALETTE);
       ctx.beginPath();
       ctx.moveTo(q.a[0],q.a[1]);ctx.lineTo(q.b[0],q.b[1]);ctx.lineTo(q.c[0],q.c[1]);ctx.lineTo(q.d[0],q.d[1]);ctx.closePath();
       ctx.fillStyle=`rgba(${r},${g},${bl},${alpha})`;
-      ctx.shadowColor=`rgba(${r},${g},${bl},0.55)`;
-      ctx.shadowBlur=14*dpr*depth;
+      // shadowBlur removed — biggest single perf cost on canvas, runs per-quad-per-frame.
       ctx.fill();
-      ctx.shadowBlur=0;
       ctx.lineWidth=dpr;
       ctx.strokeStyle=`rgba(${r},${g},${bl},${alpha*0.55})`;
       ctx.stroke();
